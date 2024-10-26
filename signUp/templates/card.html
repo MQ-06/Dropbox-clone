@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dropbox Pricing</title>
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1918;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.pricing-section {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+p {
+    font-size: 1rem;
+    color: #aaaaaa;
+}
+
+.pricing-plans {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.plan {
+    background-color: black;
+    padding: 30px;
+    border-radius: 25px;
+    width: 280px;
+    height: 460px; 
+    text-align: left;
+    position: relative;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.plan h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.plan p {
+    color: #aaaaaa;
+    margin-bottom: 20px;
+}
+
+.plan button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.plan button:hover {
+    background-color: #f1f1f1;
+}
+
+.plan a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.plan ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.plan ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; 
+}
+
+.plan ul li .icon {
+    margin-right: 10px;
+    color: white;
+}
+
+.recommended {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #175641;
+    padding: 5px 0;
+    font-size: 0.9rem;
+    text-align: left; 
+    font-weight: bold;
+    color: #ffffff;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    text-indent: 15px;
+}
+
+.recommended::before {
+    content: "⚡ ";
+    
+}
+.plus .recommended {
+    display: block;
+}
+
+.professional .recommended,
+.business .recommended {
+    display: none;
+}
+.keep-basic {
+    text-align: center;
+    text-decoration: underline;
+    color: #ffffff;
+    margin-top: 30px; 
+    margin-bottom: 40px; 
+    font-size: 1rem; 
+}
+
+.dropbox {
+        text-decoration: none;
+        color: white;
+      }
+
+      .dropbox:visited {
+        color: white;
+      }
+      .dropbox-text {
+        color: white;
+        font-family: "Arial", sans-serif;
+        font-size: 21px;
+        font-weight: bold;
+        margin-left: 2px;
+        line-height: 1;
+        position: relative;
+        top: -4px;
+      }
+      .span-logo {
+        display: inline-flex;
+        padding: 3.8px;
+      }
+
+      .dropbox-logo-container{
+        padding:10px 0px 0px 26px;
+
+      }
+    </style>
+
+</head>
+
+<body>
+    <nav class="nav-bar">
+        <div class="dropbox-logo-container">
+          <a href="/" class="dropbox" title="Dropbox">
+            <span class="span-logo">
+              <svg
+                width="26"
+                height="25"
+                viewBox="0 0 30 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.70076 0.320312L0.478516 4.91332L7.70076 9.50633L14.9242 4.91332L22.1465 9.50633L29.3687 4.91332L22.1465 0.320312L14.9242 4.91332L7.70076 0.320312Z"
+                  fill="#007ee5"
+                ></path>
+                <path
+                  d="M7.70076 18.6925L0.478516 14.0994L7.70076 9.50633L14.9242 14.0994L7.70076 18.6925Z"
+                  fill="#007ee5"
+                ></path>
+                <path
+                  d="M14.9242 14.0994L22.1465 9.50633L29.3687 14.0994L22.1465 18.6925L14.9242 14.0994Z"
+                  fill="#007ee5"
+                ></path>
+                <path
+                  d="M14.9242 24.8164L7.70077 20.2234L14.9242 15.6304L22.1465 20.2234L14.9242 24.8164Z"
+                  fill="#007ee5"
+                ></path>
+              </svg>
+            </span>
+            <span class="dropbox-text">Dropbox</span>
+          </a>
+        </div>
+
+
+    <section class="pricing-section">
+        <h1>Try out the best of Dropbox for free</h1>
+        <p>We'll remind you when you have a few days left in your trial.</p>
+
+        <div class="pricing-plans">
+            <div class="plan plus">
+                
+                <div class="recommended">Recommended</div>
+                <h2>Plus</h2>
+                <p>1 user</p>
+                <button>Try free for 30 days</button>
+                <a href="#">or purchase now</a>
+                <ul>
+                    <li><i class="icon">⏱</i> 2 TB of storage</li>
+                    <li><i class="icon">🔗</i> Connect all your devices</li>
+                    <li><i class="icon">📁</i> Transfer files up to 50 GB</li>
+                    <li><i class="icon"> 🗑</i> 30 days to restore deleted files</li>
+                </ul>
+            </div>
+
+            <div class="plan professional">
+                <h2>Professional</h2>
+                <p>1 user</p>
+                <button>Try free for 30 days</button>
+                <a href="#">or purchase now</a>
+                <ul>
+                    <li><i class="icon">⏱</i> 3 TB of storage</li>
+                    <li><i class="icon">🔗</i> Connect all your devices</li>
+                    <li><i class="icon">📁</i> Transfer files up to 100 GB</li>
+                    <li><i class="icon">🗑</i> 180 days to restore deleted files</li>
+                    <li><i class="icon">🔒</i> Password-protect any links</li>
+                </ul>
+            </div>
+
+            <div class="plan business">
+                <h2>Business</h2>
+                <p>3+ users</p>
+                <button>Try free for 30 days</button>
+                <a href="#">or purchase now</a>
+                <ul>
+                    <li><i class="icon">🗄</i> Starts at 9 TB for the team</li>
+                    <li><i class="icon">📂</i> Team folders for organization</li>
+                    <li><i class="icon">🔑</i> Admin-managed file access</li>
+                    <li><i class="icon"> 🗑</i> 180 days to restore deleted files</li>
+                    <li><i class="icon">🔗</i> Manage team sharing activity</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <p class="keep-basic">Keep 2GB Dropbox Basic</p>
+
+</body>
+
+</html>
+</body>
+
+</html>
