@@ -5,24 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dropbox Industries</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
+      .industries-section {
         text-align: center;
+        /* font-family: "Atlas GroteskWeb Regular Regular"; */
+        font-family:Arial, Helvetica, sans-serif;
+        padding: 30px 0;
+        background-color: #fff;
       }
 
-      h2 {
-        font-size: 28px;
+      .industries-section h2 {
+        font-size: 25px;
         font-weight: 600;
-        margin-top: 30px;
         color: #222;
+        margin-bottom: 20px;
       }
 
       .container {
@@ -30,19 +25,19 @@
         grid-template-columns: 1fr 1fr;
         gap: 15px;
         padding: 20px;
-        max-width: 1000px;
-        margin: 30px auto;
+        max-width: 900px;
+        margin: 0 auto;
         border-radius: 8px;
       }
 
       .card {
-        background-color: #f7f5f2; 
+        background-color: #f7f5f2;
         border-radius: 8px;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         display: flex;
         overflow: hidden;
         transition: box-shadow 0.3s ease;
-        height: 160px; 
+        height: 170px;
       }
 
       .card:hover {
@@ -50,8 +45,8 @@
       }
 
       .card img {
-        width: 40%; 
-        height: 100%; 
+        width: 40%;
+        height: 100%;
         object-fit: cover;
       }
 
@@ -62,10 +57,11 @@
       }
 
       .card h3 {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 700;
         color: #111;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
+        margin-top: 4px;
       }
 
       .card p {
@@ -82,7 +78,6 @@
         text-decoration: none;
         display: inline-flex;
         align-items: center;
-
       }
 
       .learn-more::after {
@@ -99,105 +94,110 @@
     </style>
   </head>
   <body>
-    <h2>Dropbox empowers across industries</h2>
+    <div class="industries-section">
+      <h2>Dropbox empowers across industries</h2>
 
-    <div class="container">
-      <div class="card">
-        <img
-          src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/construction/construction-hero@2x.jpg?id=dbfc08de-234c-40af-949d-7e176ad7d582&amp;width=1920&amp;output_type=jpg"
-          alt="Construction"
-        />
-        <div class="card-content">
-          <h3>Construction</h3>
-          <p>
-            With Dropbox for teams, you can store, access, preview, edit and
-            transfer CAD, BIM, PDF and visual content files from anywhere.
-          </p>
-          <a href="/business/solutions/construction" class="learn-more"
-            >Learn more</a
-          >
+      <div class="container">
+        <div class="card">
+          <img
+            src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/construction/construction-hero@2x.jpg?id=dbfc08de-234c-40af-949d-7e176ad7d582&amp;width=1920&amp;output_type=jpg"
+            alt="Construction"
+          />
+          <div class="card-content">
+            <h3>Construction</h3>
+            <p>
+              With Dropbox for teams, you can store, access, preview, edit and
+              transfer CAD, BIM, PDF and visual content files from anywhere.
+            </p>
+            <a href="/business/solutions/construction" class="learn-more"
+              >Learn more</a
+            >
+          </div>
         </div>
-      </div>
 
-      <!-- Repeat for other industries -->
-      <div class="card">
-        <img
-          src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/technology/GettyImages-1139238082.jpg?id=7e97fb44-2356-46b7-8f3d-621a5f98072e&amp;width=3840&amp;output_type=jpg"
-          alt="Technology"
-        />
-        <div class="card-content">
-          <h3>Technology</h3>
-          <p>
-            Product ideation to development, streamline technology workflows so
-            you can focus on turning great ideas into products people love.
-          </p>
-          <a href="/business/solutions/technology" class="learn-more"
-            >Learn more</a
-          >
+        <div class="card">
+          <img
+            src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/technology/GettyImages-1139238082.jpg?id=7e97fb44-2356-46b7-8f3d-621a5f98072e&amp;width=3840&amp;output_type=jpg"
+            alt="Technology"
+          />
+          <div class="card-content">
+            <h3>Technology</h3>
+            <p>
+              Product ideation to development, streamline technology workflows
+              so you can focus on turning great ideas into products people love.
+            </p>
+            <a href="/business/solutions/technology" class="learn-more"
+              >Learn more</a
+            >
+          </div>
         </div>
-      </div>
 
-      <div class="card">
-        <img
-          src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/manufacturing/GettyImages-900253108.jpg?id=560cbf20-b4fc-4ec9-8769-8a5e9ad1b223&amp;width=3840&amp;output_type=jpg"
-          alt="Manufacturing"
-        />
-        <div class="card-content">
-          <h3>Manufacturing</h3>
-          <p>
-            Design and engineering teams easily collaborate, managing complex
-            reviews and sharing large files seamlessly.
-          </p>
-          <a href="/business/solutions/manufacturing" class="learn-more"
-            >Learn more</a
-          >
+        <div class="card">
+          <img
+            src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/manufacturing/GettyImages-900253108.jpg?id=560cbf20-b4fc-4ec9-8769-8a5e9ad1b223&amp;width=3840&amp;output_type=jpg"
+            alt="Manufacturing"
+          />
+          <div class="card-content">
+            <h3>Manufacturing</h3>
+            <p>
+              Design and engineering teams easily collaborate, managing complex
+              reviews and sharing large files seamlessly.
+            </p>
+            <a href="/business/solutions/manufacturing" class="learn-more"
+              >Learn more</a
+            >
+          </div>
         </div>
-      </div>
 
-      <div class="card">
-        <img
-          src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/enterprise/creative-tools/The-Luupe-Genya-Oneall.jpg?id=bc0d3114-b68a-41e7-837b-262d86f2d472&amp;output_type=jpg"
-          alt="Media"
-        />
-        <div class="card-content">
-          <h3>Media</h3>
-          <p>
-            Create a flexible media workspace that connects your teams, content,
-            and tools together.
-          </p>
-          <a href="/business/solutions/media" class="learn-more">Learn more</a>
+        <div class="card">
+          <img
+            src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/enterprise/creative-tools/The-Luupe-Genya-Oneall.jpg?id=bc0d3114-b68a-41e7-837b-262d86f2d472&amp;output_type=jpg"
+            alt="Media"
+          />
+          <div class="card-content">
+            <h3>Media</h3>
+            <p>
+              Create a flexible media workspace that connects your teams,
+              content, and tools together.
+            </p>
+            <a href="/business/solutions/media" class="learn-more"
+              >Learn more</a
+            >
+          </div>
         </div>
-      </div>
 
-      <div class="card">
-        <img
-          src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/professional-services/etgcNMmB.jpeg?id=e7016484-98bf-4757-acad-25618e33788e&amp;width=3840&amp;output_type=jpg"
-          alt="Professional Services"
-        />
-        <div class="card-content">
-          <h3>Professional Services</h3>
-          <p>
-            Make clients happier with easy collaboration, boosted productivity,
-            and one organized place to get things done.
-          </p>
-          <a href="/business/solutions/professional-services" class="learn-more"
-            >Learn more</a
-          >
+        <div class="card">
+          <img
+            src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/business/solutions/professional-services/etgcNMmB.jpeg?id=e7016484-98bf-4757-acad-25618e33788e&amp;width=3840&amp;output_type=jpg"
+            alt="Professional Services"
+          />
+          <div class="card-content">
+            <h3>Professional Services</h3>
+            <p>
+              Make clients happier with easy collaboration, boosted
+              productivity, and one organized place to get things done.
+            </p>
+            <a
+              href="/business/solutions/professional-services"
+              class="learn-more"
+              >Learn more</a
+            >
+          </div>
         </div>
-      </div>
 
-      <div class="card">
-        <img
-          src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/education/education-hero@2x.jpg?id=40129999-5c0d-45fc-800e-134eecfd175e&amp;width=1920&amp;output_type=jpg"
-          alt="Education"
-        />
-        <div class="card-content">
-          <h3>Education</h3>
-          <p>
-            Power student learning, faculty research, and staff operations on
-            Dropbox Education’s secure cloud collaboration platform.
-          </p>
-          <a href="/education" class="learn-more">Learn more</a>
+        <div class="card">
+          <img
+            src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/education/education-hero@2x.jpg?id=40129999-5c0d-45fc-800e-134eecfd175e&amp;width=1920&amp;output_type=jpg"
+            alt="Education"
+          />
+          <div class="card-content">
+            <h3>Education</h3>
+            <p>
+              Power student learning, faculty research, and staff operations on
+              Dropbox Education’s secure cloud collaboration platform.
+            </p>
+            <a href="/education" class="learn-more">Learn more</a>
+          </div>
         </div>
       </div>
     </div>
