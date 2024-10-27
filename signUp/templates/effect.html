@@ -19,22 +19,20 @@
         justify-content: center;
         align-items: center;
       }
+
       .main-box {
         background-color: #f9f8f7;
         font-family: Arial, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
         height: 100vh;
         margin: 0;
+        max-width: 600px;
+        padding: 20px;
         font-size: 26px;
         font-weight: 700;
-        text-align: center;
-        box-sizing: border-box;
-        padding: 450px; 
       }
-
 
       .text-box {
         color: black;
@@ -80,7 +78,18 @@
         margin-left: 5px;
         vertical-align: middle;
       }
-      
+      .animated-background {
+    --animation-progress: 0; /* Default value */
+    -webkit-clip-path: inset(-100% 0 calc(100% * var(--animation-progress)) 0);
+    clip-path: inset(-100% 0 calc(100% * var(--animation-progress)) 0);
+    height: 150vh; /* Makes the div taller than the viewport */
+    display: grid; /* Enables grid layout */
+    place-items: center; /* Centers items in the grid */
+    position: relative; /* Allows positioning of children elements */
+    top: 0; /* Sets the position of the element */
+    transform: translateZ(0); /* Creates a new stacking context */
+}
+
     </style>
   </head>
   <body>
@@ -184,7 +193,20 @@
         </div>
       </div>
     </div>
-    
+    <script>
+      document.addEventListener("scroll", () => {
+        const scrollTop = window.scrollY; // Amount scrolled from the top
+        const windowHeight = window.innerHeight; // Height of the viewport
+        const docHeight = document.body.scrollHeight; // Total height of the document
+
+        // Calculate the scroll progress (0 to 1)
+        const progress = Math.min(scrollTop / (docHeight - windowHeight), 1);
+
+        // Set the CSS variable for animation progress
+        document
+          .querySelector(".animated-background")
+          .style.setProperty("--animation-progress", progress);
+      });
     </script>
   </body>
 </html>
