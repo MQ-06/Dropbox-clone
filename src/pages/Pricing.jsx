@@ -1,8 +1,25 @@
 import React from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/NavBar";
 
 const Pricing = () => {
   return (
-    <div>
+    <div className="bg-white">
+      <Navbar
+        background="white"
+        menuVisibility={{
+          products: true,
+          solutions: true,
+          enterprise: true,
+          pricing: true,
+          contactSales: true,
+          getApp: true,
+          signUp: true,
+          logIn: true,
+          getStarted: false,
+        }}
+        showDivider="true"
+      />
       <div className="max-w-7xl mx-auto py-16 px-6">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-black mb-4">
@@ -286,7 +303,7 @@ const Pricing = () => {
       </div>
 
       <div className="w-full max-w-4xl mx-auto overflow-x-auto mt-0">
-        <div className="sticky top-0 mt-10 bg-white z-10">
+        <div className=" top-0 mt-10 bg-white z-10">
           <h1 className="text-center text-2xl font-bold py-4 font-['arial']">
             Compare Plans
           </h1>
@@ -300,16 +317,18 @@ const Pricing = () => {
               Billed yearly
             </label>
           </div>
-          <div className="grid grid-cols-5 px-1 pb-5">
-            <div className="flex flex-col items-center bg-white p-6 border border-[rgba(210,180,140,.5)] "></div>
-            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(210,180,140,.5)] ">
+          <div className=" sticky grid grid-cols-1 md:grid-cols-5 px-1 pb-5z-10">
+            <div className="flex flex-col items-center bg-white p-6 border border-[rgba(210,180,140,.5)]">
+              {/* Content here */}
+            </div>
+            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(210,180,140,.5)]">
               <h3 className="text-base font-bold mb-2">Plus</h3>
               <p className="text-sm text-black">$9.99 / month</p>
               <button className="mt-4 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700">
                 Buy now
               </button>
             </div>
-            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(210,180,140,.5)]  relative">
+            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(210,180,140,.5)] sticky top-10">
               <span className="absolute top-0 right-1 bg-[#b4dc19] text-black font-bold text-xs px-2 py-1 rounded-full">
                 <i className="fas fa-star text-xs twinkle"></i> Best Value
               </span>
@@ -319,14 +338,14 @@ const Pricing = () => {
                 Try for free
               </button>
             </div>
-            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(223,192,151,0.5)]">
+            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(223,192,151,0.5)] sticky top-10">
               <h3 className="text-base font-bold mb-2">Business</h3>
               <p className="text-sm text-black">$15 / user / month</p>
               <button className="mt-4 text-sm bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                 Try for free
               </button>
             </div>
-            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(210,180,140,.5)] ">
+            <div className="flex flex-col bg-[#f7f5f2] p-6 border border-[rgba(210,180,140,.5)] sticky top-10">
               <h3 className="text-base font-bold mb-2">Business Plus</h3>
               <p className="text-sm text-black">$24 / user / month</p>
               <button className="mt-4 text-sm bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
@@ -2878,6 +2897,9 @@ const Pricing = () => {
             </table>
           </div>
         </div>
+      </div>
+      <div className="mt-10 bg-black">
+        <Footer />;
       </div>
     </div>
   );
