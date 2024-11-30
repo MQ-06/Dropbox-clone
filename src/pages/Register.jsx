@@ -1,109 +1,130 @@
-import React from 'react'
-import '../index.css'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../index.css";
+import NavBar from "../components/NavBar";
+import FooterSecond from "../components/Register/FooterSecond";
+import RegistrationForm from "./RegistrationForm";
 
-const Register = () => {
+const Register = ({ headerText }) => {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const navigate = useNavigate();
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const handleRegistration = () => {
+    navigate("/registration-form", { state: { email: userEmail } });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validate email
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email.");
+      return; // Prevent submission if the email is invalid
+    } else {
+      setEmailError(""); // Clear the error if email is valid
+    }
+
+    if (email.trim()) {
+      // Pass email to RegistrationForm if valid
+      navigate("/registration-form", { state: { email } });
+    } else {
+      alert("Please enter a valid email");
+    }
+  };
+
   return (
-    <>
-    <nav class="nav-bar">
-      <div class="dropbox-logo-container">
-        <NavLink to="/" class="dropbox" title="Dropbox">
-          <span class="span-logo">
-            <svg
-              width="26"
-              height="25"
-              viewBox="0 0 30 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.70076 0.320312L0.478516 4.91332L7.70076 9.50633L14.9242 4.91332L22.1465 9.50633L29.3687 4.91332L22.1465 0.320312L14.9242 4.91332L7.70076 0.320312Z"
-                fill="#FFFFFF"
-              ></path>
-              <path
-                d="M7.70076 18.6925L0.478516 14.0994L7.70076 9.50633L14.9242 14.0994L7.70076 18.6925Z"
-                fill="#FFFFFF"
-              ></path>
-              <path
-                d="M14.9242 14.0994L22.1465 9.50633L29.3687 14.0994L22.1465 18.6925L14.9242 14.0994Z"
-                fill="#FFFFFF"
-              ></path>
-              <path
-                d="M14.9242 24.8164L7.70077 20.2234L14.9242 15.6304L22.1465 20.2234L14.9242 24.8164Z"
-                fill="#FFFFFF"
-              ></path>
-            </svg>
-          </span>
-          <span class="dropbox-text">Dropbox</span>
-        </NavLink>
-      </div>
-    </nav>
+    <div className="font-sans bg-white min-h-screen flex flex-col">
+      <NavBar
+        background="white"
+        menuVisibility={{
+          products: false,
+          solutions: false,
+          enterprise: false,
+          pricing: false,
+          contactSales: false,
+          getApp: false,
+          signUp: false,
+          logIn: false,
+          getStarted: false,
+        }}
+        showDivider={true}
+      />
 
-    <div class="container">
-      <div class="header">Sign up or log in</div>
-      <div class="sub-header">
-        We recommend using your <strong>work email</strong>.
-      </div>
-
-      <div class="social-login">
-        <button class="google-btn">
-          <img
-            src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
-            alt="Google logo"
-            width="23"
-          />
-          Continue with Google
-        </button>
-        <button class="apple-btn">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
-            alt="Apple logo"
-            width="20"
-          />
-          Continue with Apple
-        </button>
-      </div>
-
-      <div class="or-divider">or</div>
-
-      <form method="POST" novalidate="">
-        <div class="auth-field">
-          <label class="input-label" for="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            class="input-field"
-            name="susi_email"
-            autocomplete="username"
-            required
-            placeholder="Enter your email"
-          />
-          <div
-            id="email-error"
-            class="error-message"
-            aria-live="polite"
-            aria-atomic="true"
-          ></div>
+      <div className="mx-auto max-w-sm mt-32 p-5 text-center">
+        <div className="header text-2xl font-sans mb-3">{headerText}</div>
+        <div className="sub-header text-base font-sans mt-8 mb-6">
+          We recommend using your <strong>work email</strong>.
         </div>
-        <div class="submit-container">
-          <button class="submit-button" type="submit">
-            <NavLink href="/" class="button-link">
-              <span class="button-text">Continue</span>
-            </NavLink>
+
+        <div className="social-login mb-4">
+          <button className="google-btn flex items-center justify-center w-full py-3 mb-3 border border-gray-300 bg-white hover:shadow-md transition relative">
+            <img
+              src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
+              alt="Google logo"
+              className="absolute left-4 w-6 h-6"
+            />
+            <span className="ml-8">Continue with Google</span>
+          </button>
+          <button className="apple-btn flex items-center justify-center w-full py-3 border border-gray-300 bg-white hover:shadow-md transition relative">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+              alt="Apple logo"
+              className="absolute left-4 w-5 h-6"
+            />
+            <span className="ml-8">Continue with Apple</span>
           </button>
         </div>
-      </form>
-    </div>
-    <footer class="footer-register">
-      <NavLink href="#">Privacy & terms</NavLink>
-      <NavLink href="#">Cookie policy</NavLink>
-      <NavLink href="#">Cookies & CCPA preferences</NavLink>
-      <NavLink href="#">AI Principles</NavLink>
-    </footer>
-    <hr class="reg-hr" />
 
-    </>
-  )
-}
+        <div className="or-divider relative text-gray-500 text-sm my-6">
+          <span className="relative z-10 bg-white px-3">or</span>
+          <div className="absolute inset-0 flex items-center">
+            <div className="border-t border-gray-300 flex-grow"></div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="auth-field mb-5">
+            <label
+              htmlFor="email"
+              className="input-label block mb-2 text-left text-xs text-gray-700"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              className="input-field w-full px-4 py-3 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Enter your email"
+            />
+            {emailError && (
+              <div className="error-message text-red-500 text-xs mt-1">
+                {emailError}
+              </div>
+            )}
+          </div>
+          <div className="submit-container text-center">
+            <button
+              type="submit"
+              className="submit-button w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
+              Continue
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <FooterSecond />
+    </div>
+  );
+};
 
 export default Register;

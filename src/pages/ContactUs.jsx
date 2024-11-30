@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { NavLink } from "react-router-dom";
 
 const ContactUs = () => {
+  
   const menuVisibility = {
     products: true,
     solutions: true,

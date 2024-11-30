@@ -49,7 +49,7 @@ const Home = () => {
         buttonPrimaryLink="#"
         buttonSecondaryText="Learn more"
         buttonSecondaryLink="#"
-        data-aos="fade-up" // Animation effect
+        data-aos="fade-up" 
       />
 
       <ReusableSection

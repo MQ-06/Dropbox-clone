@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS CSS
+import "aos/dist/aos.css";
 
 const ReusableSection = ({
   badgeText,
@@ -14,7 +14,6 @@ const ReusableSection = ({
   buttonSecondaryText,
   buttonSecondaryLink,
 }) => {
-  // Initialize AOS on component mount
   useEffect(() => {
     AOS.init({
       duration: 2000,
@@ -25,9 +24,8 @@ const ReusableSection = ({
   return (
     <div
       className="py-12 px-6 bg-white"
-      data-aos="fade-up" // Adding scroll-triggered animation
+      data-aos="fade-up" 
     >
-      {/* Badge Section */}
       <div className="text-center">
         <div
           className={`inline-flex items-center px-2 py-1 rounded-full text-white text-xs mb-4 ml-3`}
@@ -45,13 +43,11 @@ const ReusableSection = ({
           {badgeText}
         </div>
 
-        {/* Heading and Subtext */}
         <h2 className="text-xl font-bold tracking-tight sm:text-xl">
           {heading}
         </h2>
         <p className="mt-4 text-sm text-gray-500 max-w-xl mx-auto">{subtext}</p>
 
-        {/* Buttons */}
         <div className="mt-8 flex justify-center space-x-4">
           <a
             href={buttonPrimaryLink}

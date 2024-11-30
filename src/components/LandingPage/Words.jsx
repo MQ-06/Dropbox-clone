@@ -8,8 +8,9 @@ const Words = () => {
         style={{ fontFamily: "Arial, sans-serif" }}
       >
         <p>
-          With Dropbox you can
+          With Dropbox you can {" "}
           <span className="text-[#9b6400] font-bold inline-flex items-center gap-1">
+           
             edit and sign
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +54,7 @@ const Words = () => {
               <path d="m19.03 17.97-4.009-4.01A5.89 5.89 0 0 0 16 10.5C16 7.056 13.944 5 10.5 5S5 7.056 5 10.5 7.056 16 10.5 16a5.89 5.89 0 0 0 3.461-.979l4.009 4.01 1.06-1.061Z"></path>
             </svg>
           </span>
-          across all your apps, and it happens in the same place you
+          across all your apps, and it happens in the same place you {" "}
           <span className="text-[#cd2f7b] font-bold inline-flex items-center gap-1">
             securely store
             <svg
