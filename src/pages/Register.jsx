@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "../index.css";
 import NavBar from "../components/NavBar";
 import FooterSecond from "../components/Register/FooterSecond";
-import RegistrationForm from "./RegistrationForm";
 
-const Register = ({ headerText }) => {
+const Register = ({ headerText = "Register" }) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
@@ -13,10 +12,6 @@ const Register = ({ headerText }) => {
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
-  };
-
-  const handleRegistration = () => {
-    navigate("/registration-form", { state: { email: setEmail } });
   };
 
   const handleEmailSubmit = (e) => {
@@ -29,18 +24,16 @@ const Register = ({ headerText }) => {
 
     setEmailError(""); // Clear any existing error
 
-    // Make an API call to check if the email exists in the database
-    // Mocking the API call to check email existence
-    const isEmailInDatabase = true; // Simulate whether the email exists in the database
+    // Mock API call to check if email exists in the database
+    const isEmailInDatabase = email === "mariamqadeem121@gmail.com";
 
     if (isEmailInDatabase) {
-      // setIsExistingUser(true); // If email exists, show login form
       navigate("/password", { state: { email } });
     } else {
-      // If the email is new, proceed to the registration form
       navigate("/registration-form", { state: { email } });
     }
   };
+
   return (
     <div className="font-sans bg-white min-h-screen flex flex-col">
       <NavBar

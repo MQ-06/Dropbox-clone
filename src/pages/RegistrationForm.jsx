@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../index.css"; // Ensure styles are imported
+import "../index.css";
 import NavBar from "../components/NavBar";
 import FooterSecond from "../components/Register/FooterSecond";
 
 const RegistrationForm = () => {
   const location = useLocation();
-  console.log(location); // Debugging: Check what location contains
 
-  const { email } = location.state || {}; // Destructure email from location.state
+  const { email } = location.state || {};
 
-  // State for form inputs
   const [formData, setFormData] = useState({
     email: email || "", // Default to empty string if email is not passed
     firstName: "",
@@ -78,7 +76,6 @@ const RegistrationForm = () => {
       return;
     }
 
-    console.log("Form Submitted:", formData);
     // Add your form submission logic here (e.g., send data to the backend)
     navigate("/success"); // Redirect to a success page after form submission
   };
