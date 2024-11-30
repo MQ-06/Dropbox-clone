@@ -5,7 +5,6 @@ import Footer from "../components/Footer";
 import { NavLink } from "react-router-dom";
 
 const ContactUs = () => {
-  
   const menuVisibility = {
     products: true,
     solutions: true,
@@ -19,15 +18,19 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="font-sans" style={{ fontFamily: "Arial, sans-serif" }}>
-      <Navbar background="white" button_color="rgb(59 130 246)" menuVisibility={menuVisibility} />
+    <div className="font-sans">
+      <Navbar
+        background="white"
+        button_color="rgb(59 130 246)"
+        menuVisibility={menuVisibility}
+      />
 
       <div className="max-w-7xl mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8 bg-white">
         <div className="space-y-6">
-          <h1 className="text-3xl font-bold text-gray-900 contact-heading">
+          <h1 className="text-3xl font-bold text-gray-900 contact-heading font-serif">
             Contact our sales team
           </h1>
-          <div className="contact-content text-black text-sm space-y-4">
+          <div className="contact-content text-black text-base space-y-4 font-serif">
             <p>
               Learn how Dropbox can help your business streamline collaboration
               and increase productivity.

@@ -7,16 +7,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // Retrieve email from React Router's state
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email || "default email";
 
   const togglePasswordVisibility = () => {
     //prevState wo purana state hota hai jo abhi tak us state variable mein stored hai.
+
     setShowPassword((prevState) => !prevState);
   };
-
-  const [errors, setErrors] = useState({});
 
   const validatePassword = (password) => {
     const regex =
@@ -30,16 +30,9 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    const newErrors = {};
-
     e.preventDefault();
-    if (!password || !validatePassword(password)) {
-      newErrors.password =
-        "Password must be at least 8 characters long, contain 1 letter, 1 number, and 1 special character.";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (!password) {
+      alert("Please enter your password.");
       return;
     }
 
@@ -114,18 +107,13 @@ const Login = () => {
                 </button>
               </div>
             </div>
-            {errors.password && (
-              <div className="text-red-500 text-xs mt-1 flex items-center">
-                <span className="text-xl mr-2">×</span>
-                {errors.password}
-              </div>
-            )}
 
             <div className="flex items-center justify-between mt-4">
               <a href="#" className="text-sm text-blue-500 hover:underline">
                 Forgotten your password?
               </a>
             </div>
+
             <div className="flex items-center mt-4">
               <input
                 id="remember-me"
@@ -139,6 +127,7 @@ const Login = () => {
                 Remember me
               </label>
             </div>
+
             <button
               type="submit"
               className="mt-6 w-full py-3 text-lg bg-blue-700 text-white font-medium rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-sans"

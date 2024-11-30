@@ -102,7 +102,7 @@ const Register = ({ headerText = "Register" }) => {
               placeholder="Enter your email"
             />
             {emailError && (
-              <div className="error-message text-red-500 text-xs mt-1">
+              <div className="error-message text-red-500 text-xs text-left">
                 {emailError}
               </div>
             )}
