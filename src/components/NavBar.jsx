@@ -4,12 +4,11 @@ import { NavLink } from "react-router-dom";
 const Navbar = ({
   background = "black",
   menuVisibility = {},
-  button_color="white",
+  button_color = "white",
   showDivider = false,
 }) => {
   const [visible, setVisible] = useState(false);
 
-  // Default menu items
   const defaultMenuItems = [
     { name: "Products", path: "/products", key: "products" },
     { name: "Solutions", path: "/solutions", key: "solutions" },
@@ -18,16 +17,16 @@ const Navbar = ({
     { name: "Contact Sales", path: "/contact-us", key: "contactSales" },
     { name: "Get App", path: "/get-app", key: "getApp" },
     { name: "Sign Up", path: "/register", key: "signUp" },
-    { name: "Log In", path: "/login", key: "logIn" },
+    { name: "Log In", path: "/login", key: "signUp" },
     { name: "Get Started", path: "/plans", key: "getStarted", isButton: true },
   ];
 
   const filteredMenuItems = defaultMenuItems.filter(
-    (item) => menuVisibility[item.key] !== false 
+    (item) => menuVisibility[item.key] !== false
   );
 
-  const leftMenuItems = filteredMenuItems.slice(0, 4); 
-  const rightMenuItems = filteredMenuItems.slice(4); 
+  const leftMenuItems = filteredMenuItems.slice(0, 4);
+  const rightMenuItems = filteredMenuItems.slice(4);
 
   const textColor = background === "black" ? "white" : "black";
 
@@ -92,7 +91,8 @@ const Navbar = ({
                 <NavLink
                   key={item.key}
                   to={item.path}
-                  className=" text-black px-4 py-2 rounded-lg font-semibold text-sm" style={{backgroundColor:button_color}}
+                  className=" text-black px-4 py-2 rounded-lg font-semibold text-sm"
+                  style={{ backgroundColor: button_color }}
                 >
                   {item.name}
                 </NavLink>
@@ -132,12 +132,11 @@ const Navbar = ({
       </nav>
 
       {showDivider && (
-    <hr
-      className="sticky top-0 z-50"
-      style={{ backgroundColor: 'skin', height: '1.1px', width: '100%' }}
-    />
-  )}
-
+        <hr
+          className="sticky top-0 z-50"
+          style={{ backgroundColor: "skin", height: "1.1px", width: "100%" }}
+        />
+      )}
     </>
   );
 };

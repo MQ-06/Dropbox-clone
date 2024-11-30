@@ -3,10 +3,10 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import ContactUs from "./pages/ContactUs";
 import Register from "./pages/Register";
-import Login from "./pages/Register";
 import Pricing from "./pages/Pricing";
+import Login from "./pages/Login";
 import register from "./components/Register/register";
-import RegistrationForm    from "./pages/RegistrationForm";
+import RegistrationForm from "./pages/RegistrationForm";
 
 function App() {
   return (
@@ -19,9 +19,11 @@ function App() {
         />
         <Route
           path="/login"
-          element={<Login headerText="Log in or Sign up" />}
+          element={<Register headerText="Log in or Sign up" />}
         />
+
         <Route path="/registration-form" element={<RegistrationForm />} />
+        <Route path="/password" element={<Login />} />
 
         <Route path="/contact-Us" element={<ContactUs />} />
         <Route path="/plans" element={<Pricing />} />

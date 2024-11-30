@@ -16,28 +16,31 @@ const Register = ({ headerText }) => {
   };
 
   const handleRegistration = () => {
-    navigate("/registration-form", { state: { email: userEmail } });
+    navigate("/registration-form", { state: { email: setEmail } });
   };
 
-  const handleSubmit = (e) => {
+  const handleEmailSubmit = (e) => {
     e.preventDefault();
 
-    // Validate email
     if (!validateEmail(email)) {
       setEmailError("Please enter a valid email.");
-      return; // Prevent submission if the email is invalid
-    } else {
-      setEmailError(""); // Clear the error if email is valid
+      return;
     }
 
-    if (email.trim()) {
-      // Pass email to RegistrationForm if valid
-      navigate("/registration-form", { state: { email } });
+    setEmailError(""); // Clear any existing error
+
+    // Make an API call to check if the email exists in the database
+    // Mocking the API call to check email existence
+    const isEmailInDatabase = true; // Simulate whether the email exists in the database
+
+    if (isEmailInDatabase) {
+      // setIsExistingUser(true); // If email exists, show login form
+      navigate("/password", { state: { email } });
     } else {
-      alert("Please enter a valid email");
+      // If the email is new, proceed to the registration form
+      navigate("/registration-form", { state: { email } });
     }
   };
-
   return (
     <div className="font-sans bg-white min-h-screen flex flex-col">
       <NavBar
@@ -88,7 +91,7 @@ const Register = ({ headerText }) => {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleEmailSubmit} noValidate>
           <div className="auth-field mb-5">
             <label
               htmlFor="email"
