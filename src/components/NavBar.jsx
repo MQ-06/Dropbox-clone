@@ -8,6 +8,7 @@ const Navbar = ({
   showDivider = false,
 }) => {
   const [visible, setVisible] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const defaultMenuItems = [
     { name: "Products", path: "/products", key: "products" },
@@ -15,7 +16,7 @@ const Navbar = ({
     { name: "Enterprise", path: "/enterprise", key: "enterprise" },
     { name: "Pricing", path: "/plans", key: "pricing" },
     { name: "Contact Sales", path: "/contact-us", key: "contactSales" },
-    { name: "Get App", path: "/get-app", key: "getApp" },
+    { name: "Get App", path: "/get-app", key: "getApp", isDropdown: true },
     { name: "Sign Up", path: "/register", key: "signUp" },
     { name: "Log In", path: "/login", key: "signUp" },
     { name: "Get Started", path: "/plans", key: "getStarted", isButton: true },
@@ -87,7 +88,49 @@ const Navbar = ({
           </div>
           <div className="flex items-center space-x-6">
             {rightMenuItems.map((item) =>
-              item.isButton ? (
+              item.isDropdown ? (
+                <div key={item.key} className="relative">
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="flex items-center space-x-2 font-semibold text-[15px] hover:text-blue-500"
+                    style={{ color: textColor }}
+                  >
+                    <span>{item.name}</span>
+                    <svg
+                      className={`w-5 h-5 transform ${
+                        dropdownOpen ? "rotate-180" : ""
+                      }`}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M7 10l5 5 5-5H7z" fill={textColor} />
+                    </svg>
+                  </button>
+                  {dropdownOpen && (
+  <div
+    className="absolute left-0 w-full bg-black text-white p-4 mt-2 rounded-lg"
+    style={{ zIndex: 1000 }}
+  >
+    <div className="flex flex-col">
+      <NavLink
+        to="/desktop-app"
+        className="block py-2 hover:text-blue-500 text-sm text-white w-full text-center"
+      >
+        Desktop App
+      </NavLink>
+      <NavLink
+        to="/mobile-app"
+        className="block py-2 hover:text-blue-500 text-sm text-white w-full text-center"
+      >
+        Mobile App
+      </NavLink>
+    </div>
+  </div>
+)}
+
+                </div>
+              ) : item.isButton ? (
                 <NavLink
                   key={item.key}
                   to={item.path}
