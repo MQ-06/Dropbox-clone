@@ -108,27 +108,26 @@ const Navbar = ({
                     </svg>
                   </button>
                   {dropdownOpen && (
-  <div
-    className="absolute left-0 w-full bg-black text-white p-4 mt-2 rounded-lg"
-    style={{ zIndex: 1000 }}
-  >
-    <div className="flex flex-col">
-      <NavLink
-        to="/desktop-app"
-        className="block py-2 hover:text-blue-500 text-sm text-white w-full text-center"
-      >
-        Desktop App
-      </NavLink>
-      <NavLink
-        to="/mobile-app"
-        className="block py-2 hover:text-blue-500 text-sm text-white w-full text-center"
-      >
-        Mobile App
-      </NavLink>
-    </div>
-  </div>
-)}
-
+                    <div
+                      className="absolute left-0 w-full bg-black text-white p-4 mt-2 rounded-lg"
+                      style={{ zIndex: 1000 }}
+                    >
+                      <div className="flex flex-col">
+                        <NavLink
+                          to="/desktop-app"
+                          className="block py-2 hover:text-blue-500 text-sm text-white w-full text-center"
+                        >
+                          Desktop App
+                        </NavLink>
+                        <NavLink
+                          to="/mobile-app"
+                          className="block py-2 hover:text-blue-500 text-sm text-white w-full text-center"
+                        >
+                          Mobile App
+                        </NavLink>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : item.isButton ? (
                 <NavLink

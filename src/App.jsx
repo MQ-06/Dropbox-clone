@@ -7,6 +7,8 @@ import Pricing from "./pages/Pricing";
 import Login from "./pages/Login";
 import register from "./components/Register/register";
 import RegistrationForm from "./pages/RegistrationForm";
+import Desktop from "./components/DesktopApp/Desktop";
+import Mobile from "./components/MobileApp/Mobile";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
 
         <Route path="/contact-Us" element={<ContactUs />} />
         <Route path="/plans" element={<Pricing />} />
+        <Route path="/desktop-app" element={<Desktop />} />
+        <Route path="/mobile-app" element={<Mobile />} />
       </Routes>
     </div>
   );
