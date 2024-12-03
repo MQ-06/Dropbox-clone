@@ -15,7 +15,7 @@ const Enterprise = () => {
     getStarted: true,
   };
   return (
-    <div>
+    <div className="bg-[#f7f5f2]">
       <Navbar
         background="white"
         button_color="rgb(59 130 246)"
@@ -196,22 +196,199 @@ const Enterprise = () => {
         </div>
       </div>
 
+      <div className="bg-[#f7f5f2] text-center py-20 px-6">
+        <h2 className="text-black text-3xl md:text-4xl font-semibold mb-4">
+          Security isn’t just our priority, it’s our <br />
+          promise
+        </h2>
+        <p
+          className="text-black text-sm mb-6 text-center mx-auto"
+          style={{ maxWidth: "600px" }}
+        >
+          Dropbox helps teams work securely. User, device and content controls
+          ensure nothing gets shared you don’t want shared, and nothing gets
+          seen you don’t want seen.
+        </p>
+        <a
+          href="https://www.g2.com/products/dropbox/reviews"
+          target="_blank"
+          rel="noreferrer"
+          className="text-black font-semibold underline inline-flex items-center hover:text-gray-300 transition"
+        >
+          Read our security whitepaper
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            className="ml-2 w-5 h-5"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5 11.75h12m-5.25-6.5 6.25 6.5-6.25 6.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeMiterlimit="10"
+              vectorEffect="non-scaling-stroke"
+            ></path>
+          </svg>
+        </a>
+      </div>
+      {/* pictures section */}
 
+      <div
+        style={{
+          fontFamily: "'Times New Roman', Times, serif",
+          textAlign: "center",
+        }}
+        className="text-4xl font-bold bg-[#f7f5f2]"
+      >
+        <h2>Features built for enterprise teams</h2>
+      </div>
+      <div
+        className="flex flex-col md:flex-row items-center justify-between w-full h-screen py-12 px-6 bg-[#f7f5f2]"
+        style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+      >
+        <div className="md:w-2/3 lg:w-3/5 flex justify-center mb-8 md:mb-0">
+          <div className="shadow-lg overflow-hidden w-full h-auto">
+            <img
+              alt="Three people sitting at a desk looking at a tablet."
+              className="w-full h-full object-cover"
+              loading="lazy"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/enterprise/work-from-office-01-2560x1709.png?id=a07fd89c-199f-47dd-b447-055c7cf38aa6&amp;width=2560&amp;output_type=png"
+            />
+          </div>
+        </div>
 
+        <div className="md:w-1/3 lg:w-2/5 md:pl-8">
+          <div className="text-left ml-12">
+            <div className="mb-4">
+              <span className="text-sm font-bold text-black uppercase">
+                Domain management
+              </span>
+            </div>
+            <h2 className="text-3xl font-semibold text-gray-900 leading-tight mb-4">
+              Simplicity makes security feel effortless
+            </h2>
+            <p className="text-gray-700 leading-relaxed mb-4 text-sm">
+              Onboarding to Dropbox is simple, quick, and controllable with a
+              click.
+            </p>
+            <p className="text-gray-700 leading-relaxed text-sm">
+              Verify users in your organisation and prevent unauthorised usage.
+              Migrate anyone with a company email to a single team with domain
+              verification and account capture.
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <div
+        className="flex flex-col md:flex-row-reverse items-center justify-between w-full h-screen py-12 px-6 bg-[#f7f5f2]"
+        style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+      >
+        <div className="md:w-2/3 lg:w-3/5 flex justify-center mb-14 md:mb-0">
+          <div className="shadow-lg overflow-hidden w-full h-auto">
+            <img
+              alt="Three people sitting at a desk looking at a tablet."
+              className="w-full h-full object-cover"
+              loading="lazy"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/enterprise/work-from-office-02-2560x1707.png?id=f4c2bb17-6210-4986-abd3-006eea519f7a&width=1920&output_type=webp"
+            />
+          </div>
+        </div>
 
+        <div className="md:w-1/3 lg:w-2/5 md:pr-8">
+          <div className="text-left">
+            <div className="mb-4">
+              <span className="text-sm font-bold text-black uppercase">
+                Data governance add-on
+              </span>
+            </div>
 
+            <h2 className="text-3xl font-semibold text-gray-900 leading-tight mb-4">
+              Data governance gets rid of the risk
+            </h2>
 
+            <p className="text-gray-700 leading-relaxed mb-4 text-sm max-w-sm">
+              Data management tools ease the burden on IT teams. The wealth of
+              data and files across your organisation doesn’t have to feel like
+              a liability. You just need to know it’s protected, under control
+              and retrievable at any time for up to 10 years.
+            </p>
+            <p className="text-gray-700 leading-relaxed text-sm max-w-sm">
+              So if auditors come with questions, or a client wants to see a
+              ten-year-old file, you’re covered.
+            </p>
 
+            <div className="mt-6">
+              <button className="border border-black text-black px-8 rounded-lg text-sm font-semibold shadow-lg py-4">
+                Explore data governance
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div className="bg-[#1e1919] text-white py-12 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold mb-4">
+            Dropbox Enterprise: like Dropbox, but bigger
+          </h2>
+          <p className="text-xs text-gray-300 mb-8">
+            Do everything you’d normally do with Dropbox, and more:
+          </p>
+        </div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto text-left">
+          <div className="max-w-[160px]">
+            <h3 className="text-base font-bold mb-2">Sharing</h3>
+            <p className="text-gray-400 text-xs">
+              Share large files and content
+            </p>
+          </div>
+          <div className="max-w-[180px]">
+            <h3 className="text-base font-semibold mb-2">Storage</h3>
+            <p className="text-gray-400 text-xs">
+              Provide secure storage with collaborators, even if they don’t have
+              a Dropbox plan
+            </p>
+          </div>
+          <div className="max-w-[160px]">
+            <h3 className="text-base font-semibold mb-2">File requests</h3>
+            <p className="text-gray-400 text-xs">
+              Collect content from stakeholders with file requests
+            </p>
+          </div>
+          <div className="max-w-[180px]">
+            <h3 className="text-base font-semibold mb-2">
+              Document management
+            </h3>
+            <p className="text-gray-400 text-xs">
+              Speed up document turnaround with the ability to convert, edit,
+              sign, and organise PDFs
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <div
+        style={{
+          fontFamily: "'Times New Roman', Times, serif",
+          textAlign: "center",
+        }}
+        className="text-4xl font-bold bg-[#f7f5f2]"
+      >
+        <h2 className="mt-10">Expedia travels with Dropbox</h2>
+      </div>
 
-
-
-
-
-      
+      <div className="bg-[#f7f5f2] flex justify-center items-center py-12 px-6 -mt-5">
+        <div className="bg-[#f7f5f2] overflow-hidden p-4">
+          <img
+            src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/en-us/enterprise/expedia-video-thumb-1024x564.png?id=6f15f69b-9697-4091-9176-d03422ecf12a&width=1920&output_type=webp"
+            alt="Expedia Video Thumbnail"
+            className="w-full h-auto"
+          />
+        </div>
+      </div>
 
       <Footer />
     </div>
