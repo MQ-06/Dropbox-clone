@@ -1,6 +1,12 @@
 import React from "react";
 import Footer from "../Footer";
 import Navbar from "../NavBar";
+import {
+  FaMoneyBillWave,
+  FaRedo,
+  FaCheckSquare,
+  FaTrophy,
+} from "react-icons/fa";
 
 const Enterprise = () => {
   const menuVisibility = {
@@ -390,6 +396,87 @@ const Enterprise = () => {
         </div>
       </div>
 
+      <div className="bg-[#1e1919] text-white py-16 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">
+            How much better can it get?
+          </h2>
+          <p className="text-sm mb-6">
+            Dropbox improves productivity by accelerating key workflows and
+            projects – all while providing a better employee experience.
+          </p>
+          <a href="#" className="text-white underline">
+            Read the Forrester report →
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 max-w-5xl mx-auto">
+          {/* Feature 1 */}
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-4">
+              <FaMoneyBillWave className="text-3xl text-white" />
+            </div>
+            <h3 className="text-base font-semibold mb-2">
+              Boost your bottom line
+            </h3>
+            <p className="text-xs ">
+              Teams using Dropbox saw a 375% ROI and payback in under six
+              months.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-4">
+              <FaRedo className="text-3xl text-white" />
+            </div>
+            <h3 className="text-base font-semibold mb-2">Skip the do-overs</h3>
+            <p className="text-xs">
+              Dropbox increased collaboration by 10% and showed a 90% reduction
+              in rework.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-4">
+              <FaCheckSquare className="text-3xl text-white" />
+            </div>
+            <h3 className="text-base font mb-2">Get more done</h3>
+            <p className="text-xs">
+              Companies using Dropbox improved productivity – valued at over
+              $530,000 – over three years.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-4">
+              <FaTrophy className="text-3xl text-white" />
+            </div>
+            <h3 className="text-base font mb-2">Go big and go home</h3>
+            <p className="text-xs">
+              Dropbox supports over 189 file types and can handle large files,
+              HD and 4k-rich media up to 2 TB – with 4× faster upload, download
+              and sync.
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div className="bg-[#1e1919] text-white py-9 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row justify-around items-center">
+        <h2 className="text-4xl lg:text-4xl font-semibold mb-4 lg:mb-0 max-w-[560px]">
+          Collaborate at scale with Dropbox Enterprise
+        </h2>
+
+        <a
+          href="#"
+          className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-4 px-7 rounded-lg flex items-center transition duration-300"
+        >
+          Contact sales
+          <span className="ml-2">→</span>
+        </a>
+      </div>
+    </div>
       <Footer />
     </div>
   );
