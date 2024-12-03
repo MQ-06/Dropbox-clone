@@ -9,6 +9,7 @@ import register from "./components/Register/register";
 import RegistrationForm from "./pages/RegistrationForm";
 import Desktop from "./components/DesktopApp/Desktop";
 import Mobile from "./components/MobileApp/Mobile";
+import Enterprise from "./components/Enterprise/Enterprise";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
 
         <Route path="/registration-form" element={<RegistrationForm />} />
         <Route path="/password" element={<Login />} />
+        <Route path="/enterprise" element={<Enterprise />} />
 
         <Route path="/contact-Us" element={<ContactUs />} />
         <Route path="/plans" element={<Pricing />} />
