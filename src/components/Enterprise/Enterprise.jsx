@@ -1,6 +1,8 @@
 import React from "react";
 import Footer from "../Footer";
 import Navbar from "../NavBar";
+
+import Slider from "./Slider";
 import {
   FaMoneyBillWave,
   FaRedo,
@@ -396,7 +398,149 @@ const Enterprise = () => {
         </div>
       </div>
 
-      <div className="bg-[#1e1919] text-white py-16 px-6">
+      {/* the  app icons section */}
+
+      <div className="bg-[#f7f5f2] font-serif">
+        <div className="text-center py-20 px-6">
+          <h2 className="text-black text-3xl md:text-4xl font-semibold mb-4">
+            Dropbox works with who you work with
+          </h2>
+          <p
+            className="text-black text-sm mb-6 text-center mx-auto"
+            style={{ maxWidth: "600px" }}
+          >
+            When your data automatically syncs between tools, users have more
+            time to get things done without constantly switching context.
+          </p>
+          <a
+            href="https://www.g2.com/products/dropbox/reviews"
+            target="_blank"
+            rel="noreferrer"
+            className="text-black font-semibold underline inline-flex items-center hover:text-gray-300 transition"
+          >
+            Explore app integrations
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              className="ml-2 w-5 h-5"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 11.75h12m-5.25-6.5 6.25 6.5-6.25 6.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeMiterlimit="10"
+                vectorEffect="non-scaling-stroke"
+              ></path>
+            </svg>
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[850px] mx-auto">
+          <div className="flex flex-col items-start">
+            <img
+              alt="Zoom logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/zoom-64x64.svg?id=efe22ed9-cd50-4936-9d61-3ed948d1f67b"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-base text-left mb-2">Zoom</h3>
+            <p className="text-left text-sm">
+              Connect and collaborate on all your content, in real time, no
+              matter where your teams may be.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start">
+            <img
+              alt="Slack logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/slack-64x64.svg?id=e028dbd7-df26-4076-ad15-faa51c132578"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-base mb-2">Slack</h3>
+            <p className="text-left text-sm">
+              Integrate your conversations and Dropbox content to keep teams in
+              sync.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start">
+            <img
+              alt="Office 365 logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/office-365-64x64.svg?id=4476fa42-2482-45b5-8bbd-3b83027ca3e7"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-base mb-2">Office365</h3>
+            <p className="text-left text-sm">
+              Easily access, edit and share Office docs online in Dropbox.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start">
+            <img
+              alt="Google Workspace logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/google-workspace-64x64.svg?id=78f36f5f-a55a-4904-b45f-03a76f6688a9"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-base mb-2">Google Workspace</h3>
+            <p className="text-left text-sm">
+              Create, edit and share Google Docs, Sheets and Slides from
+              Dropbox.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10 max-w-[850px] mx-auto">
+          <div className="flex flex-col items-start p-4 max-w-xs mx-auto">
+            <img
+              alt="Microsoft Teams logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/microsoft-teams-64x64.svg"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-lg mb-2">Microsoft Teams</h3>
+            <p className="text-left text-sm">
+              Share files directly from Dropbox to Microsoft Teams.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start p-4 max-w-xs mx-auto">
+            <img
+              alt="Canva logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/canva-64x64.svg"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-lg mb-2">Canva</h3>
+            <p className="text-left text-sm">
+              Create beautiful graphics in Canva with your Dropbox content.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start p-4 max-w-xs mx-auto">
+            <img
+              alt="Asana logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/asana-64x64.svg"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-lg mb-2">Asana</h3>
+            <p className="text-left text-sm">
+              Track work with Asana while keeping Dropbox content nearby.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start p-4 max-w-xs mx-auto">
+            <img
+              alt="Miro logo"
+              src="https://fjord.dropboxstatic.com/warp/conversion/dropbox/warp/icons/miro-64x64.svg"
+              className="mb-4"
+            />
+            <h3 className="font-semibold text-lg mb-2">Miro</h3>
+            <p className="text-left text-sm">
+              Collaborate with your Dropbox files on an online whiteboard.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-[#1e1919] text-white py-24 px-6">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">
             How much better can it get?
@@ -461,22 +605,23 @@ const Enterprise = () => {
         </div>
       </div>
 
-
+      <Slider />
       <div className="bg-[#1e1919] text-white py-9 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row justify-around items-center">
-        <h2 className="text-4xl lg:text-4xl font-semibold mb-4 lg:mb-0 max-w-[560px]">
-          Collaborate at scale with Dropbox Enterprise
-        </h2>
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row justify-around items-center">
+          <h2 className="text-4xl lg:text-4xl font-semibold mb-4 lg:mb-0 max-w-[560px]">
+            Collaborate at scale with Dropbox Enterprise
+          </h2>
 
-        <a
-          href="#"
-          className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-4 px-7 rounded-lg flex items-center transition duration-300"
-        >
-          Contact sales
-          <span className="ml-2">→</span>
-        </a>
+          <a
+            href="#"
+            className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-4 px-7 rounded-lg flex items-center transition duration-300"
+          >
+            Contact sales
+            <span className="ml-2">→</span>
+          </a>
+        </div>
       </div>
-    </div>
+
       <Footer />
     </div>
   );
