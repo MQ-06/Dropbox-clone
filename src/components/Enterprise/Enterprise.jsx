@@ -606,7 +606,40 @@ const Enterprise = () => {
       </div>
 
       <Slider />
-      <div className="bg-[#1e1919] text-white py-9 px-6">
+      <div className="bg-[#f7f5f2] font-serif p-8 -mt-24">
+        <h2 className="text-center text-3xl font-bold mb-6">
+          You’re in good company
+        </h2>
+
+        <div className="flex justify-evenly items-center mt-9 gap-x-1">
+          <div className="max-w-[200px] w-full text-left">
+            <p className="text-sm font-bold">56% of Fortune 500 companies</p>
+            <p className="text-xs mt-2">have at least one Dropbox team plan.</p>
+          </div>
+          <div className="max-w-[200px] w-full text-left">
+            <p className="text-sm font-bold">600+ teams globally</p>
+            <p className="text-xs mt-2">
+              use Dropbox to share work, safeguard content and grow their
+              business.
+            </p>
+          </div>
+          <div className="max-w-[200px] w-full text-left">
+            <p className="text-sm font-bold">4.5B connections and counting</p>
+            <p className="text-xs mt-2">
+              created through Dropbox file sharing.
+            </p>
+          </div>
+          <div className="max-w-[200px] w-full text-left">
+            <p className="text-sm font-bold">1B+ mobile app downloads</p>
+            <p className="text-xs mt-2">
+              with Editors’ Choice Awards from the Google Play and Apple App
+              Store.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-[#1e1919] text-white py-9 px-6 mt-5">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row justify-around items-center">
           <h2 className="text-4xl lg:text-4xl font-semibold mb-4 lg:mb-0 max-w-[560px]">
             Collaborate at scale with Dropbox Enterprise
