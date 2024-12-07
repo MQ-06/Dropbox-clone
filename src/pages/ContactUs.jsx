@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import "../index.css";
 import Navbar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { NavLink } from "react-router-dom";
 
 const ContactUs = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    company: "",
+    companySize: "",
+    jobTitle: "",
+    country: "",
+    help: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
   const menuVisibility = {
     products: true,
     solutions: true,
@@ -15,6 +30,43 @@ const ContactUs = () => {
     signUp: true,
     logIn: true,
     getStarted: true,
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.firstName) newErrors.firstName = "First Name is required.";
+    if (!formData.lastName) newErrors.lastName = "Last Name is required.";
+    if (!formData.email) newErrors.email = "Email is required.";
+    else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
+    )
+      newErrors.email = "Invalid email address.";
+    if (!formData.phone) newErrors.phone = "Phone Number is required.";
+    if (!formData.company) newErrors.company = "Company Name is required.";
+    if (!formData.companySize)
+      newErrors.companySize = "Company Size is required.";
+    if (!formData.jobTitle) newErrors.jobTitle = "Job Title is required.";
+    if (!formData.country) newErrors.country = "Country is required.";
+    if (!formData.help) newErrors.help = "This field is required.";
+    if (!formData.message) newErrors.message = "Message is required.";
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      console.log("Form submitted successfully", formData);
+      // Handle form submission (e.g., API call)
+    }
   };
 
   return (
@@ -68,134 +120,101 @@ const ContactUs = () => {
 
         {/* Right Section (Form) */}
         <div className="px-16">
-          <form action="#" method="POST" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="firstName" className="block text-sm text-black">
-                  First Name:<span className="text-red-500"> *</span>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {[
+              { label: "First Name", name: "firstName", type: "text" },
+              { label: "Last Name", name: "lastName", type: "text" },
+              { label: "Work Email Address", name: "email", type: "email" },
+              { label: "Phone Number", name: "phone", type: "tel" },
+              { label: "Company Name", name: "company", type: "text" },
+              { label: "Job Title", name: "jobTitle", type: "text" },
+            ].map((field) => (
+              <div key={field.name}>
+                <label
+                  htmlFor={field.name}
+                  className="block text-sm text-black"
+                >
+                  {field.label}:<span className="text-red-500"> *</span>
                 </label>
                 <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+                  type={field.type}
+                  id={field.name}
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  className={`mt-1 block w-full border ${
+                    errors[field.name] ? "border-red-500" : "border-gray-300"
+                  } shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500`}
                 />
+                {errors[field.name] && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors[field.name]}
+                  </p>
+                )}
               </div>
-              <div>
-                <label htmlFor="lastName" className="block text-sm text-black">
-                  Last Name:<span className="text-red-500"> *</span>
+            ))}
+
+            {/* Dropdown Fields */}
+            {[
+              {
+                label: "Company Size",
+                name: "companySize",
+                options: [
+                  "Select...",
+                  "1-10",
+                  "11-50",
+                  "51-200",
+                  "201-500",
+                  "500+",
+                ],
+              },
+              {
+                label: "Country",
+                name: "country",
+                options: ["Select...", "United States", "Canada", "UK", "Other"],
+              },
+              {
+                label: "How can our sales team help you?",
+                name: "help",
+                options: [
+                  "Select...",
+                  "Discuss pricing and plans",
+                  "Understand specific features",
+                  "Improve workflow efficiency",
+                  "Other",
+                ],
+              },
+            ].map((dropdown) => (
+              <div key={dropdown.name}>
+                <label htmlFor={dropdown.name} className="block text-sm text-black">
+                  {dropdown.label}:<span className="text-red-500"> *</span>
                 </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-                />
+                <select
+                  id={dropdown.name}
+                  name={dropdown.name}
+                  value={formData[dropdown.name]}
+                  onChange={handleChange}
+                  className={`mt-1 block w-full border ${
+                    errors[dropdown.name]
+                      ? "border-red-500"
+                      : "border-gray-300"
+                  } shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500`}
+                >
+                  {dropdown.options.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                {errors[dropdown.name] && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors[dropdown.name]}
+                  </p>
+                )}
               </div>
-            </div>
+            ))}
 
-            <div>
-              <label htmlFor="email" className="block text-sm text-black">
-                Work Email Address:<span className="text-red-500"> *</span>
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm text-black">
-                Phone Number:<span className="text-red-500"> *</span>
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="company" className="block text-sm text-black">
-                Company Name:<span className="text-red-500"> *</span>
-              </label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="companySize" className="block text-sm text-black">
-                Company size:<span className="text-red-500"> *</span>
-              </label>
-              <select
-                id="companySize"
-                name="companySize"
-                className="text-sm mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Select...</option>
-                <option value="1-10">1-10</option>
-                <option value="11-50">11-50</option>
-                <option value="51-200">51-200</option>
-                <option value="201-500">201-500</option>
-                <option value="500+">500+</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="jobTitle" className="block text-sm text-black">
-                Job Title:<span className="text-red-500"> *</span>
-              </label>
-              <input
-                type="text"
-                id="jobTitle"
-                name="jobTitle"
-                className="text-sm mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="country" className="block text-sm text-black">
-                Country:<span className="text-red-500"> *</span>
-              </label>
-              <select
-                id="country"
-                name="country"
-                className="text-sm mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Select...</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="UK">United Kingdom</option>
-                <option value="AU">Australia</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="help" className="block text-sm text-black">
-                How can our sales team help you?
-                <span className="text-red-500"> *</span>
-              </label>
-              <select
-                id="help"
-                name="help"
-                className="text-sm mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Select...</option>
-                <option value="pricing">Discuss pricing and plans</option>
-                <option value="features">Understand specific features</option>
-                <option value="workflow">Improve workflow efficiency</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
+            {/* Message Field */}
             <div>
               <label htmlFor="message" className="block text-sm text-black">
                 Message:<span className="text-red-500"> *</span>
@@ -203,10 +222,17 @@ const ContactUs = () => {
               <textarea
                 id="message"
                 name="message"
-                placeholder="Let us know any relevant information that is relevant for your business requirements"
+                value={formData.message}
+                onChange={handleChange}
                 rows="5"
-                className="text-sm mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-              ></textarea>
+                placeholder="Let us know any relevant information that is relevant for your business requirements"
+                className={`mt-1 block w-full border ${
+                  errors.message ? "border-red-500" : "border-gray-300"
+                } shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500`}
+              />
+              {errors.message && (
+                <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+              )}
             </div>
 
             <div className="block text-sm text-black">
