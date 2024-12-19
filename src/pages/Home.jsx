@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import Hero from "../components/LandingPage/Hero";
 import Footer from "../components/Footer";
 import Words from "../components/LandingPage/Words";
