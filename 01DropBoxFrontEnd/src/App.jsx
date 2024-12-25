@@ -28,7 +28,7 @@ const App = () => {
       "/desktop-app": "Desktop App - Dropbox",
       "/mobile-app": "Mobile App - Dropbox",
       "/install": "Download - Dropbox",
-      "/dashboard": "Home - Dropbox",
+      "/dashboard:id": "Home - Dropbox",
     };
 
     document.title = titles[location.pathname] || "dropbox";

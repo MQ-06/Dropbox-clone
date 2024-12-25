@@ -117,7 +117,7 @@ const Main = ({ theme }) => {
       ${
         theme === "dark"
           ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300" 
+          : "bg-white text-gray-700 border border-gray-300"
       } 
       py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
         >

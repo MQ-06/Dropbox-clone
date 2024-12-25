@@ -8,23 +8,24 @@ const passport = require("passport");
 const passportStrategy = require("./passport");
 require('./models/db');
 const session = require('express-session');
+const contactRoutes = require("./routes/contact");
 
 const PORT = process.env.PORT || 5000;
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET , 
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, 
+    cookie: { secure: false },
   })
 );
 
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: "http://localhost:5173",
     methods: "GET,POST,PUT,DELETE",
-    credentials: true, 
+    credentials: true,
   })
 );
 app.use(passport.initialize());
@@ -34,6 +35,7 @@ app.use(bodyParser.json());
 
 
 app.use('/auth', AuthRouter);
+app.use("/api/contact", contactRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

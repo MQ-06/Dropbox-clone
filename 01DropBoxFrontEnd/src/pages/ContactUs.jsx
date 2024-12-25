@@ -42,9 +42,7 @@ const ContactUs = () => {
     if (!formData.firstName) newErrors.firstName = "First Name is required.";
     if (!formData.lastName) newErrors.lastName = "Last Name is required.";
     if (!formData.email) newErrors.email = "Email is required.";
-    else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
-    )
+    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email))
       newErrors.email = "Invalid email address.";
     if (!formData.phone) newErrors.phone = "Phone Number is required.";
     if (!formData.company) newErrors.company = "Company Name is required.";
@@ -58,14 +56,42 @@ const ContactUs = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      console.log("Form submitted successfully", formData);
-      // Handle form submission (e.g., API call)
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/contact/submit",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          }
+        );
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message);
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            company: "",
+            companySize: "",
+            jobTitle: "",
+            country: "",
+            help: "",
+            message: "",
+          });
+        } else {
+          alert(result.error);
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
     }
   };
 
@@ -119,7 +145,8 @@ const ContactUs = () => {
         </div>
 
         <div className="px-16">
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4"       style={{ fontFamily: "Arial, Helvetica, sans-serif" }} // Font style here
+          >
             {[
               { label: "First Name", name: "firstName", type: "text" },
               { label: "Last Name", name: "lastName", type: "text" },
@@ -141,7 +168,8 @@ const ContactUs = () => {
                   name={field.name}
                   value={formData[field.name]}
                   onChange={handleChange}
-                  className={`mt-1 block w-full border ${
+                  style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+                  className={`mt-1 block w-full border  ${
                     errors[field.name] ? "border-red-500" : "border-gray-300"
                   } shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500`}
                 />
@@ -155,6 +183,7 @@ const ContactUs = () => {
 
             {[
               {
+
                 label: "Company Size",
                 name: "companySize",
                 options: [
@@ -169,7 +198,13 @@ const ContactUs = () => {
               {
                 label: "Country",
                 name: "country",
-                options: ["Select...", "United States", "Canada", "UK", "Other"],
+                options: [
+                  "Select...",
+                  "United States",
+                  "Canada",
+                  "UK",
+                  "Other",
+                ],
               },
               {
                 label: "How can our sales team help you?",
@@ -184,7 +219,10 @@ const ContactUs = () => {
               },
             ].map((dropdown) => (
               <div key={dropdown.name}>
-                <label htmlFor={dropdown.name} className="block text-sm text-black">
+                <label
+                  htmlFor={dropdown.name}
+                  className="block text-sm text-black"
+                >
                   {dropdown.label}:<span className="text-red-500"> *</span>
                 </label>
                 <select
@@ -193,9 +231,7 @@ const ContactUs = () => {
                   value={formData[dropdown.name]}
                   onChange={handleChange}
                   className={`mt-1 block w-full border ${
-                    errors[dropdown.name]
-                      ? "border-red-500"
-                      : "border-gray-300"
+                    errors[dropdown.name] ? "border-red-500" : "border-gray-300"
                   } shadow-sm py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500`}
                 >
                   {dropdown.options.map((option, index) => (

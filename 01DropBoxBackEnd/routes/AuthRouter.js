@@ -23,9 +23,9 @@ router.get(
             profilePicture: req.user.profilePicture,
         };
 
-        
+
         res.redirect(`${process.env.CLIENT_URL}/dashboard/${userData.id}?token=${token}&user=${encodeURIComponent(JSON.stringify(userData))}`);
-        
+
     }
 );
 
