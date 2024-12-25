@@ -10,8 +10,10 @@ import {
   FaStar,
   FaArrowUp,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Main = ({ theme }) => {
+  const navigate = useNavigate();
   return (
     <div
       className={`flex flex-col relative ${
@@ -86,17 +88,20 @@ const Main = ({ theme }) => {
         </button>
 
         <button
+          onClick={() => navigate("/install")} // Navigate to /install on click
           className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
-      ${
-        theme === "dark"
-          ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300" // Light theme with light black borders
-      } 
-      py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
+        ${
+          theme === "dark"
+            ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
+            : "bg-white text-gray-700 border border-gray-300"
+        } 
+        py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
         >
           <FaAppStore
             className={`text-lg transition-transform transform duration-300 ease-in-out 
-        ${theme === "dark" ? "text-white" : "text-gray-700"} hover:rotate-180`}
+          ${
+            theme === "dark" ? "text-white" : "text-gray-700"
+          } hover:rotate-180`}
           />
           <span
             className={`text-xs mt-3 ${
@@ -112,7 +117,7 @@ const Main = ({ theme }) => {
       ${
         theme === "dark"
           ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300" // Light theme with light black borders
+          : "bg-white text-gray-700 border border-gray-300" 
       } 
       py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
         >
@@ -134,7 +139,7 @@ const Main = ({ theme }) => {
       ${
         theme === "dark"
           ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300" // Light theme with light black borders
+          : "bg-white text-gray-700 border border-gray-300"
       } 
       py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
         >
@@ -155,7 +160,7 @@ const Main = ({ theme }) => {
       <div className="flex-1 p-2">
         <div className="flex items-center justify-between mb-4">
           <h1
-            className={`text-2xl font-bold ${
+            className={`text-2xl font-medium ${
               theme === "dark" ? "text-white" : "text-black"
             }`}
             style={{ fontFamily: "Arial, Helvetica, sans-serif" }}

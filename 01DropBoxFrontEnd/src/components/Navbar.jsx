@@ -153,7 +153,6 @@ const Navbar = ({
           </div>
         </ul>
 
-        {/* Hamburger Button for Small Screens */}
         <button
           onClick={() => setVisible(!visible)}
           className="md:hidden flex items-center justify-center bg-transparent"

@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { UserContext } from "../../context/UserContext";
 import Main from "./main";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { user, logoutUser } = useContext(UserContext);
@@ -130,7 +131,7 @@ const Header = () => {
 
       <div className="flex-1 ml-16 lg:ml-0 lg:pl-16 p-4 lg:h-screen">
         <div className="flex items-center justify-between mb-4">
-          <div className="relative w-[42%]">
+          <div className="relative w-[50%] right-7">
             <FaSearch
               className={`absolute top-3 left-3 ${
                 theme === "dark" ? "text-gray-400" : "text-gray-500"
@@ -349,13 +350,15 @@ const Header = () => {
               )}
             </div>
 
-            <button className="px-3 py-1.5 text-sm font-sm text-black bg-lime-400 rounded-md hover:bg-lime-500">
-              Click to upgrade
-            </button>
+            <Link to="/plans">
+              <button className="px-3 py-1.5 text-sm font-sm text-black bg-lime-400 rounded-md hover:bg-lime-500">
+                Click to upgrade
+              </button>
+            </Link>
           </div>
         </div>
 
-        <div className="main-section">
+        <div className="main-section ml-[-30px]">
           <Main theme={theme} />
         </div>
       </div>

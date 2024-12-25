@@ -13,8 +13,8 @@ import "aos/dist/aos.css";
 const Home = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // animation duration
-      once: true, // only animate once
+      duration: 2000, 
+      once: false, 
     });
   }, []);
 

@@ -10,13 +10,14 @@ import Desktop from "./components/DesktopApp/Desktop";
 import Mobile from "./components/MobileApp/Mobile";
 import Enterprise from "./components/Enterprise/Enterprise";
 import Dashboard from "./pages/Dashboard";
+import DownloadApp from "./components/DownloadApp";
 
 const App = () => {
   const location = useLocation();
 
   useEffect(() => {
     const titles = {
-      "/": "Home - Dropbox",
+      "/": " Dropbox",
       "/register": "Register - Dropbox",
       "/login": "Login - Dropbox",
       "/registration-form": "Registration Form - Dropbox",
@@ -26,6 +27,8 @@ const App = () => {
       "/plans": "Plans - Dropbox",
       "/desktop-app": "Desktop App - Dropbox",
       "/mobile-app": "Mobile App - Dropbox",
+      "/install": "Download - Dropbox",
+      "/dashboard": "Home - Dropbox",
     };
 
     document.title = titles[location.pathname] || "dropbox";
@@ -52,6 +55,7 @@ const App = () => {
         <Route path="/mobile-app" element={<Mobile />} />
         <Route path="/dashboard/:id" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/install" element={<DownloadApp />} />
       </Routes>
     </div>
   );
