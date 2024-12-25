@@ -118,7 +118,6 @@ const ContactUs = () => {
           />
         </div>
 
-        {/* Right Section (Form) */}
         <div className="px-16">
           <form onSubmit={handleSubmit} className="space-y-4">
             {[
@@ -154,7 +153,6 @@ const ContactUs = () => {
               </div>
             ))}
 
-            {/* Dropdown Fields */}
             {[
               {
                 label: "Company Size",
@@ -214,7 +212,6 @@ const ContactUs = () => {
               </div>
             ))}
 
-            {/* Message Field */}
             <div>
               <label htmlFor="message" className="block text-sm text-black">
                 Message:<span className="text-red-500"> *</span>

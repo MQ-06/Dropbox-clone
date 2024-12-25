@@ -27,12 +27,10 @@ const RegistrationForm = () => {
     specialChar: false,
   });
 
-  const [isTouched, setIsTouched] = useState(false); // Track if the user interacted with the field
-  const [showPassword, setShowPassword] = useState(false); // Track password visibility
-  const [showValidation, setShowValidation] = useState(false); // To show password validation
+  const [isTouched, setIsTouched] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false); 
+  const [showValidation, setShowValidation] = useState(false); 
   const navigate = useNavigate();
-
-  // Input change handler
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -112,11 +110,9 @@ const RegistrationForm = () => {
       );
 
       if (response.data.success) {
-        // Save the token in localStorage or state
         localStorage.setItem("authToken", response.data.token);
-        // Set the user data in context
         const userData = response.data.user;
-        loginUser(userData); // Store user data and initials in context
+        loginUser(userData); 
 
         navigate(`/dashboard/${response.data.user._id}`);
       }
