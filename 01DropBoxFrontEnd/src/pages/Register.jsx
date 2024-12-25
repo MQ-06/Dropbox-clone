@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "../index.css";
+import axios from "axios";
 import NavBar from "../components/Navbar";
 import FooterSecond from "../components/Register/FooterSecond";
-import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 const Register = ({ headerText = "Register" }) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { loginUser } = useContext(UserContext);
+  ;
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -52,6 +54,23 @@ const Register = ({ headerText = "Register" }) => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/auth/google";
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/auth/check-login-status")
+      .then((response) => {
+        if (response.data.loggedIn) {
+          const userData = response.data.user;
+          loginUser(userData);
+          navigate("/Dashboard");
+        }
+      })
+      .catch((err) => console.log("Error checking login status:", err));
+  }, [navigate, loginUser]);
+
   return (
     <div className="font-sans bg-white min-h-screen flex flex-col">
       <NavBar
@@ -77,7 +96,10 @@ const Register = ({ headerText = "Register" }) => {
         </div>
 
         <div className="social-login mb-4">
-          <button className="google-btn flex items-center justify-center w-full py-3 mb-3 border border-gray-300 bg-white hover:shadow-md transition relative">
+          <button
+            className="google-btn flex items-center justify-center w-full py-3 mb-3 border border-gray-300 bg-white hover:shadow-md transition relative"
+            onClick={handleGoogleLogin}
+          >
             <img
               src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
               alt="Google logo"
@@ -85,6 +107,7 @@ const Register = ({ headerText = "Register" }) => {
             />
             <span className="ml-8">Continue with Google</span>
           </button>
+
           <button className="apple-btn flex items-center justify-center w-full py-3 border border-gray-300 bg-white hover:shadow-md transition relative">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
@@ -125,6 +148,7 @@ const Register = ({ headerText = "Register" }) => {
               </div>
             )}
           </div>
+
           <div className="submit-container text-center">
             <button
               type="submit"

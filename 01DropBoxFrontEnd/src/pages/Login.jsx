@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext"
 import NavBar from "../components/Navbar";
 import FooterSecond from "../components/Register/FooterSecond";
 import axios from "axios";
 
 const Login = () => {
+  const { loginUser } = useContext(UserContext); 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -49,8 +51,15 @@ const Login = () => {
       );
 
       if (response.status === 200) {
+        // Save the token in localStorage
         localStorage.setItem("authToken", response.data.token);
-        navigate("/");
+
+        // Store user data in context
+        const userData = response.data.user;
+        loginUser(userData); // Set the user data (including initials) in context
+
+        // Redirect to the user's dashboard
+        navigate(`/dashboard/${userData._id}`);
       } else {
         setErrorMessage(
           response.data.error || "An error occurred. Please try again."
@@ -68,6 +77,7 @@ const Login = () => {
       }
     }
   };
+
   return (
     <div className="min-h-screen flex flex-col">
       <NavBar

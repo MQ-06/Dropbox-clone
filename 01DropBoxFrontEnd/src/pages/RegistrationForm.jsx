@@ -3,12 +3,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../index.css";
 import NavBar from "../components/Navbar";
 import FooterSecond from "../components/Register/FooterSecond";
-import axios from 'axios';
+import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
-
+import { useContext } from "react";
 const RegistrationForm = () => {
   const location = useLocation();
-  const { email } = location.state || {}; // Using email passed from previous page
+  const { email } = location.state || {};
+  const { loginUser } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     email: email || "",
@@ -58,7 +60,7 @@ const RegistrationForm = () => {
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setFormData({ ...formData, password: newPassword });
-    setIsTouched(true); 
+    setIsTouched(true);
 
     const validationResults = validatePassword(newPassword);
     setPasswordValidation(validationResults);
@@ -102,6 +104,7 @@ const RegistrationForm = () => {
       setErrors(newErrors);
       return;
     }
+
     try {
       const response = await axios.post(
         "http://localhost:5000/auth/register",
@@ -109,7 +112,13 @@ const RegistrationForm = () => {
       );
 
       if (response.data.success) {
-        navigate("/");
+        // Save the token in localStorage or state
+        localStorage.setItem("authToken", response.data.token);
+        // Set the user data in context
+        const userData = response.data.user;
+        loginUser(userData); // Store user data and initials in context
+
+        navigate(`/dashboard/${response.data.user._id}`);
       }
     } catch (error) {
       setErrors({ general: "Registration failed. Please try again." });
@@ -134,7 +143,6 @@ const RegistrationForm = () => {
 
   return (
     <div className="font-sans bg-white min-h-screen flex flex-col">
-     
       <NavBar background="white" menuVisibility={menu} showDivider={true} />{" "}
       <div className="mx-auto max-w-sm text-center mt-24">
         <div

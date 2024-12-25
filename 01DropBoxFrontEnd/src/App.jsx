@@ -9,6 +9,7 @@ import RegistrationForm from "./pages/RegistrationForm";
 import Desktop from "./components/DesktopApp/Desktop";
 import Mobile from "./components/MobileApp/Mobile";
 import Enterprise from "./components/Enterprise/Enterprise";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   const location = useLocation();
@@ -49,6 +50,8 @@ const App = () => {
         <Route path="/plans" element={<Pricing />} />
         <Route path="/desktop-app" element={<Desktop />} />
         <Route path="/mobile-app" element={<Mobile />} />
+        <Route path="/dashboard/:id" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );

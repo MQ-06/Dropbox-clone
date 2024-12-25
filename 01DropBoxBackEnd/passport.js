@@ -23,13 +23,14 @@ passport.use(
 						firstName: profile.name.givenName,
 						lastName: profile.name.familyName,
 						email: profile.emails[0].value,
+						profilePic: profile.photos ? profile.photos[0].value : "", // Save the profile picture URL
 					});
 					existingUser = await newUser.save();
 				}
 
 				return done(null, existingUser);
 			} catch (error) {
-				console.error(error);
+				console.error("Error in Google OAuth strategy:", error);
 				return done(error, false);
 			}
 		}
@@ -45,8 +46,9 @@ passport.deserializeUser(async (id, done) => {
 		const user = await User.findById(id);
 		done(null, user);
 	} catch (error) {
+		console.error("Error in deserializing user:", error);
 		done(error, null);
 	}
 });
 
-module.exports = passport; 
+module.exports = passport;
