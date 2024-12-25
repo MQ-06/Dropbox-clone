@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   FaSearch,
   FaUserPlus,
@@ -19,19 +19,26 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isThemeDropdownVisible, setIsThemeDropdownVisible] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const savedTheme = localStorage.getItem("theme");
+  const [theme, setTheme] = useState(savedTheme || "light");
 
+  const changeTheme = (selectedTheme) => {
+    setTheme(selectedTheme);
+    localStorage.setItem("theme", selectedTheme);
+    setIsThemeDropdownVisible(false);
+  };
+
+  useEffect(() => {
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, [savedTheme]);
   const toggleDropdown = () => {
     setIsDropdownVisible((prevState) => !prevState);
   };
 
   const toggleThemeDropdown = () => {
     setIsThemeDropdownVisible((prevState) => !prevState);
-  };
-
-  const changeTheme = (selectedTheme) => {
-    setTheme(selectedTheme);
-    setIsThemeDropdownVisible(false);
   };
 
   return (
@@ -85,13 +92,15 @@ const Header = () => {
             <div
               className={`p-1.5 rounded-full ${
                 theme === "dark" ? "bg-white" : "bg-gray-200"
-              } flex items-center justify-center group-hover:bg-white`}
+              } flex items-center justify-center group-hover:bg-white `}
             >
               <FaHome className="text-black w-4 h-4" />
             </div>
             <span
-              className={`text-xs mt-2 group-hover:text-gray-900 ${
-                theme === "dark" ? "text-white" : "text-gray-700"
+              className={`text-xs mt-2  ${
+                theme === "dark"
+                  ? "text-white"
+                  : "text-gray-700 group-hover:text-gray-900"
               }`}
             >
               Home
@@ -107,8 +116,10 @@ const Header = () => {
               <FaFolder className="text-black w-4 h-4" />
             </div>
             <span
-              className={`text-xs mt-2 group-hover:text-gray-900 ${
-                theme === "dark" ? "text-white" : "text-gray-700"
+              className={`text-xs mt-2  ${
+                theme === "dark"
+                  ? "text-white"
+                  : "text-gray-700 group-hover:text-gray-900"
               }`}
             >
               Folders
@@ -188,7 +199,7 @@ const Header = () => {
             <div className="relative">
               <button
                 onClick={toggleDropdown}
-                className="flex items-center justify-center w-8 h-8 text-xs font-xs text-black bg-blue-400 rounded-full z-1"
+                className="flex items-center justify-center w-8 h-8 text-xs font-xs text-black bg-blue-400 rounded-full z-10"
               >
                 {user?.firstName?.charAt(0).toUpperCase()}
                 {user?.lastName?.charAt(0).toUpperCase()}
@@ -196,7 +207,7 @@ const Header = () => {
 
               {isDropdownVisible && (
                 <div
-                  className={`absolute right-0 mt-2 w-54 rounded-md shadow-md ${
+                  className={`absolute right-0 mt-2 w-54 rounded-md shadow-md z-50 ${
                     theme === "dark"
                       ? "bg-[#333333] text-white"
                       : "bg-white text-black"
@@ -296,7 +307,7 @@ const Header = () => {
 
                       {isThemeDropdownVisible && (
                         <div
-                          className={`absolute left-0 mt-1 border border-gray-300 rounded-md shadow-md w-36 ${
+                          className={`absolute left-0 mt-1 border border-gray-300 rounded-md shadow-md w-36 z-50 ${
                             theme === "dark" ? "bg-[#444444]" : "bg-white"
                           }`}
                         >
@@ -345,7 +356,7 @@ const Header = () => {
         </div>
 
         <div className="main-section">
-          <Main />
+          <Main theme={theme} />
         </div>
       </div>
     </div>
