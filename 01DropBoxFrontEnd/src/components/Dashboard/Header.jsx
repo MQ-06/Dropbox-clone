@@ -9,8 +9,10 @@ import {
   FaFolder,
   FaChevronUp,
   FaChevronDown,
+  FaUser,
 } from "react-icons/fa";
 import { UserContext } from "../../context/UserContext";
+import Main from "./main";
 
 const Header = () => {
   const { user, logoutUser } = useContext(UserContext);
@@ -143,9 +145,10 @@ const Header = () => {
                   : "text-gray-700 bg-gray-200 hover:bg-gray-300"
               }`}
             >
-              <FaUserPlus
+              <FaUser
+                Plus
                 className={`mr-2 ${
-                  theme === "dark" ? "text-white" : "text-black-600"
+                  theme === " dark" ? "text-white" : "text-black-600"
                 }`}
               />
               Invite members
@@ -185,7 +188,7 @@ const Header = () => {
             <div className="relative">
               <button
                 onClick={toggleDropdown}
-                className="flex items-center justify-center w-8 h-8 text-xs font-xs text-black bg-blue-400 rounded-full"
+                className="flex items-center justify-center w-8 h-8 text-xs font-xs text-black bg-blue-400 rounded-full z-1"
               >
                 {user?.firstName?.charAt(0).toUpperCase()}
                 {user?.lastName?.charAt(0).toUpperCase()}
@@ -195,7 +198,7 @@ const Header = () => {
                 <div
                   className={`absolute right-0 mt-2 w-54 rounded-md shadow-md ${
                     theme === "dark"
-                      ? "bg-[#333333] text-white ]"
+                      ? "bg-[#333333] text-white"
                       : "bg-white text-black"
                   }`}
                 >
@@ -239,7 +242,7 @@ const Header = () => {
                       <a
                         href="#"
                         className={`block ${
-                          theme === "dark" ? "text-white " : "text-black"
+                          theme === "dark" ? "text-white" : "text-black"
                         }`}
                       >
                         Settings
@@ -250,7 +253,7 @@ const Header = () => {
                         href="#"
                         className={`block ${
                           theme === "dark"
-                            ? "text-white  hover:text-black"
+                            ? "text-white hover:text-black"
                             : "text-black"
                         }`}
                       >
@@ -262,7 +265,7 @@ const Header = () => {
                         href="#"
                         className={`block ${
                           theme === "dark"
-                            ? "text-white  hover:bg-[#333333]"
+                            ? "text-white hover:bg-[#333333]"
                             : "text-black"
                         }`}
                       >
@@ -274,7 +277,7 @@ const Header = () => {
                         href="#"
                         className={`block ${
                           theme === "dark"
-                            ? "text-white  hover:bg-[#333333]"
+                            ? "text-white hover:bg-[#333333]"
                             : "text-black"
                         }`}
                       >
@@ -285,7 +288,7 @@ const Header = () => {
                       <button
                         onClick={toggleThemeDropdown}
                         className={`block ${
-                          theme === "dark" ? "text-white  " : "text-black"
+                          theme === "dark" ? "text-white" : "text-black"
                         }`}
                       >
                         Theme
@@ -299,7 +302,7 @@ const Header = () => {
                         >
                           <button
                             onClick={() => changeTheme("light")}
-                            className={`block w-full px-4 py-2 text-left  ${
+                            className={`block w-full px-4 py-2 text-left ${
                               theme === "dark"
                                 ? "text-white hover:bg-[#333333]"
                                 : "text-black hover:bg-gray-100"
@@ -311,7 +314,7 @@ const Header = () => {
                             onClick={() => changeTheme("dark")}
                             className={`block w-full px-4 py-2 text-left hover:bg-gray-100 ${
                               theme === "dark"
-                                ? "text-white  hover:bg-[#333333]"
+                                ? "text-white hover:bg-[#333333]"
                                 : "text-black"
                             }`}
                           >
@@ -339,6 +342,10 @@ const Header = () => {
               Click to upgrade
             </button>
           </div>
+        </div>
+
+        <div className="main-section">
+          <Main />
         </div>
       </div>
     </div>

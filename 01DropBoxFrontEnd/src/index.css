@@ -3,6 +3,7 @@
 @tailwind utilities;
  
 
+
 /* custom  font */
 
 @font-face {
@@ -11,6 +12,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 
 nav ul {
   list-style-type: none;
