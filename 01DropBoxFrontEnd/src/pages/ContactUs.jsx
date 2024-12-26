@@ -145,7 +145,7 @@ const ContactUs = () => {
         </div>
 
         <div className="px-16">
-          <form onSubmit={handleSubmit} className="space-y-4"       style={{ fontFamily: "Arial, Helvetica, sans-serif" }} // Font style here
+          <form onSubmit={handleSubmit} className="space-y-4"       style={{ fontFamily: "Arial, Helvetica, sans-serif" }} 
           >
             {[
               { label: "First Name", name: "firstName", type: "text" },

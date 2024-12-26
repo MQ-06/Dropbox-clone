@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
 
@@ -23,30 +23,32 @@ export const UserProvider = ({ children }) => {
   }, [user]);
 
   const loginUser = (userData) => {
-    if (userData.firstName && userData.lastName) {
-      const initials =
-        userData.firstName[0].toUpperCase() +
-        userData.lastName[0].toUpperCase();
+    console.log("User Data:", userData);
 
-      const profilePictureURL = userData.profilePicture || null;
+    const firstName = userData.firstName || "Guest";
+    const lastName = userData.lastName || "";
 
-      const updatedUser = {
-        ...userData,
-        initials,
-        profilePicture: profilePictureURL,
-      };
-      setUser(updatedUser);
+    const initials =
+      (firstName[0]?.toUpperCase() || "") + (lastName[0]?.toUpperCase() || "");
 
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-    } else {
-      console.error("Invalid user data");
-    }
+    const profilePictureURL = userData.profilePicture || null;
+
+    const updatedUser = {
+      ...userData,
+      firstName,
+      lastName,
+      initials,
+      profilePicture: profilePictureURL,
+    };
+
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
   };
 
   const logoutUser = () => {
     setUser(null);
     localStorage.removeItem("user");
-    navigate("/"); 
+    navigate("/");
   };
 
   return (

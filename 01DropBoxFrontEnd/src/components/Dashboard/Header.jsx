@@ -14,19 +14,55 @@ import {
 import { UserContext } from "../../context/UserContext";
 import Main from "./main";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const { user, logoutUser } = useContext(UserContext);
+  const { user, logoutUser, loginUser } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isThemeDropdownVisible, setIsThemeDropdownVisible] = useState(false);
   const savedTheme = localStorage.getItem("theme");
   const [theme, setTheme] = useState(savedTheme || "light");
+  const navigate = useNavigate();
 
   const changeTheme = (selectedTheme) => {
     setTheme(selectedTheme);
     localStorage.setItem("theme", selectedTheme);
     setIsThemeDropdownVisible(false);
+  };
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    const id = urlParams.get("id");
+
+    if (token) {
+      localStorage.setItem("authToken", token);
+      fetchUserData(token);
+    } else if (id) {
+      navigate(`/dashboard/${id}`);
+    } else {
+      console.error("No token or id found in the URL");
+    }
+  }, [navigate]);
+
+  const fetchUserData = async (token) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      const data = await response.json();
+
+      loginUser(data);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
   };
 
   useEffect(() => {
@@ -197,18 +233,25 @@ const Header = () => {
               <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
             </div>
 
-            <div className="relative">
+            <div className="relative ">
               <button
                 onClick={toggleDropdown}
                 className="flex items-center justify-center w-8 h-8 text-xs font-xs text-black bg-blue-400 rounded-full z-10"
               >
-                {user?.firstName?.charAt(0).toUpperCase()}
-                {user?.lastName?.charAt(0).toUpperCase()}
+                {user?.profilePhoto ? (
+                  <img
+                    src={user.profilePhoto}
+                    alt="User  Profile"
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                ) : (
+                  user?.firstName?.charAt(0).toUpperCase() +
+                  user?.lastName?.charAt(0).toUpperCase()
+                )}
               </button>
-
               {isDropdownVisible && (
                 <div
-                  className={`absolute right-0 mt-2 w-54 rounded-md shadow-md z-50 ${
+                  className={`absolute right-0 mt-2 w-54 rounded-md shadow-md z-50  ${
                     theme === "dark"
                       ? "bg-[#333333] text-white"
                       : "bg-white text-black"
@@ -249,12 +292,18 @@ const Header = () => {
                   </div>
                   <hr />
 
-                  <ul className="py-1 text-xs">
-                    <li>
+                  <ul className="py-1 text-xs ">
+                    <li
+                      className={
+                        theme === "dark"
+                          ? "hover:bg-[#333333]"
+                          : "hover:bg-gray-200"
+                      }
+                    >
                       <a
                         href="#"
                         className={`block ${
-                          theme === "dark" ? "text-white" : "text-black"
+                          theme === "dark" ? "text-black" : "text-black"
                         }`}
                       >
                         Settings
@@ -264,9 +313,7 @@ const Header = () => {
                       <a
                         href="#"
                         className={`block ${
-                          theme === "dark"
-                            ? "text-white hover:text-black"
-                            : "text-black"
+                          theme === "dark" ? "text-black" : "text-black"
                         }`}
                       >
                         Manage account
@@ -276,9 +323,7 @@ const Header = () => {
                       <a
                         href="#"
                         className={`block ${
-                          theme === "dark"
-                            ? "text-white hover:bg-[#333333]"
-                            : "text-black"
+                          theme === "dark" ? "text-black " : "text-black"
                         }`}
                       >
                         Automations
@@ -288,9 +333,7 @@ const Header = () => {
                       <a
                         href="#"
                         className={`block ${
-                          theme === "dark"
-                            ? "text-white hover:bg-[#333333]"
-                            : "text-black"
+                          theme === "dark" ? "text-black " : "text-black"
                         }`}
                       >
                         Install desktop app
@@ -299,8 +342,8 @@ const Header = () => {
                     <li>
                       <button
                         onClick={toggleThemeDropdown}
-                        className={`block ${
-                          theme === "dark" ? "text-white" : "text-black"
+                        className={`block  ${
+                          theme === "dark" ? "text-black" : "text-black"
                         }`}
                       >
                         Theme
@@ -308,7 +351,7 @@ const Header = () => {
 
                       {isThemeDropdownVisible && (
                         <div
-                          className={`absolute left-0 mt-1 border border-gray-300 rounded-md shadow-md w-36 z-50 ${
+                          className={`absolute left-0 mt-1 border  rounded-md shadow-md w-36 z-50 ${
                             theme === "dark" ? "bg-[#444444]" : "bg-white"
                           }`}
                         >
@@ -324,10 +367,10 @@ const Header = () => {
                           </button>
                           <button
                             onClick={() => changeTheme("dark")}
-                            className={`block w-full px-4 py-2 text-left hover:bg-gray-100 ${
+                            className={`block w-full px-4 py-2 text-left  ${
                               theme === "dark"
                                 ? "text-white hover:bg-[#333333]"
-                                : "text-black"
+                                : "text-black hover:bg-gray-100"
                             }`}
                           >
                             Dark Mode
@@ -339,7 +382,7 @@ const Header = () => {
                       <button
                         onClick={logoutUser}
                         className={`block ${
-                          theme === "dark" ? "text-white" : "text-black"
+                          theme === "dark" ? "text-black" : "text-black"
                         }`}
                       >
                         Log out

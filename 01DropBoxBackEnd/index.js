@@ -9,6 +9,8 @@ const passportStrategy = require("./passport");
 require('./models/db');
 const session = require('express-session');
 const contactRoutes = require("./routes/contact");
+const userRoutes = require('./routes/userRoute'); 
+const authenticateToken=require('./middlewares/AuthValidation')
 
 const PORT = process.env.PORT || 5000;
 
@@ -36,6 +38,19 @@ app.use(bodyParser.json());
 
 app.use('/auth', AuthRouter);
 app.use("/api/contact", contactRoutes);
+app.get("/api/user", authenticateToken, (req, res) => {
+  console.log("Decoded User:", req.user);
+
+  const user = {
+    id: req.user.id,
+    firstName: req.user.firstName || "",
+    lastName: req.user.lastName || "",
+    profilePicture: req.user.profilePicture || null,
+  };
+
+  res.json(user);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

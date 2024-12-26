@@ -59,6 +59,18 @@ const Register = ({ headerText = "Register" }) => {
   };
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get("id");
+    const token = urlParams.get("token");
+
+    if (userId && token) {
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("token", token);
+
+      loginUser({ id: userId, token: token });
+      navigate(`/dashboard/${userId}`); 
+    }
+
     axios
       .get("http://localhost:5000/auth/check-login-status")
       .then((response) => {
