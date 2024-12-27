@@ -10,7 +10,21 @@ import {
   FaChevronUp,
   FaChevronDown,
   FaUser,
+  FaArrowLeft,
+  FaChevronLeft,
+  FaChevronRight,
+  FaArrowRight,
 } from "react-icons/fa";
+
+import {
+  MdOutlineFolder,
+  MdPhotoLibrary,
+  MdPeopleAlt,
+  MdEditNote,
+  MdFileDownload,
+  MdDelete,
+} from "react-icons/md";
+
 import { UserContext } from "../../context/UserContext";
 import Main from "./main";
 import { Link } from "react-router-dom";
@@ -24,12 +38,20 @@ const Header = () => {
   const savedTheme = localStorage.getItem("theme");
   const [theme, setTheme] = useState(savedTheme || "light");
   const navigate = useNavigate();
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
 
   const changeTheme = (selectedTheme) => {
     setTheme(selectedTheme);
-    localStorage.setItem("theme", selectedTheme);
+    if (user?.id) {
+      localStorage.setItem(`theme_${user.id}`, selectedTheme);
+    }
     setIsThemeDropdownVisible(false);
   };
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
@@ -58,8 +80,14 @@ const Header = () => {
       }
 
       const data = await response.json();
-
       loginUser(data);
+
+      const savedThemeForUser = localStorage.getItem(`theme_${data.id}`);
+      if (savedThemeForUser) {
+        setTheme(savedThemeForUser);
+      } else {
+        setTheme("light");
+      }
     } catch (error) {
       console.error("Error fetching user data", error);
     }
@@ -70,6 +98,18 @@ const Header = () => {
       setTheme(savedTheme);
     }
   }, [savedTheme]);
+
+  useEffect(() => {
+    if (user) {
+      const savedThemeForUser = localStorage.getItem(`theme_${user.id}`);
+      if (savedThemeForUser) {
+        setTheme(savedThemeForUser);
+      } else {
+        setTheme("light");
+      }
+    }
+  }, [user]);
+
   const toggleDropdown = () => {
     setIsDropdownVisible((prevState) => !prevState);
   };
@@ -80,18 +120,19 @@ const Header = () => {
 
   return (
     <div
-      className={`flex flex-col lg:flex-row ${
+      className={`flex flex-col lg:flex-row  ${
         theme === "dark" ? "bg-[#1a1a19] text-white" : "bg-white text-black"
       }`}
     >
       <aside
-        className={`lg:w-16 w-full sm:w-9 ${
+        className={`flex flex-col items-center py-3 border-r h-screen fixed z-10 ${
+          isSidebarVisible ? "w-16" : "lg:w-16 sm:w-9 w-24"
+        } ${
           theme === "dark" ? "bg-black" : "bg-[#f7f5f2]"
-        } flex flex-col items-center py-3 border-r ${
-          theme === "dark" ? "border-gray-700" : "border-gray-300"
-        } h-screen fixed lg:relative z-10`}
+        } transition-all duration-300 left-1`}
+        
       >
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between w-full">
           <a href="/" className="block">
             <svg
               className="w-8 h-8"
@@ -119,7 +160,7 @@ const Header = () => {
           </a>
         </div>
 
-        <nav className="space-y-6">
+        <nav className="space-y-6 w-full">
           <button
             onClick={() => setActiveSection("home")}
             className={`flex flex-col items-center group ${
@@ -129,7 +170,7 @@ const Header = () => {
             <div
               className={`p-1.5 rounded-full ${
                 theme === "dark" ? "bg-white" : "bg-gray-200"
-              } flex items-center justify-center group-hover:bg-white `}
+              } flex items-center justify-center  `}
             >
               <FaHome className="text-black w-4 h-4" />
             </div>
@@ -143,6 +184,7 @@ const Header = () => {
               Home
             </span>
           </button>
+
           <button
             onClick={() => setActiveSection("folders")}
             className={`flex flex-col items-center group ${
@@ -163,7 +205,78 @@ const Header = () => {
             </span>
           </button>
         </nav>
+        <button
+          onClick={toggleSidebar}
+          className="text-black p-2 absolute bottom-0 mb-8 w-full flex justify-center"
+        >
+          {isSidebarVisible ? <FaChevronLeft /> : <FaChevronRight />}
+        </button>
       </aside>
+
+      <div className="relative ">
+        <div
+          className={`flex-grow-0 lg:pl-16 p-4 lg:h-screen transition-all duration-300 ${
+            isSidebarVisible ? "ml-48" : "ml-0"
+          }`}
+          style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+        >
+          {isSidebarVisible && activeSection === "folders" && (
+            <aside
+              className={`fixed left-16 top-0 h-screen  ${
+                theme === "dark"
+                  ? "bg-[#121211] text-white"
+                  : "bg-[#f7f5f2] text-black"
+              } shadow-md w-48 z-20`}
+            >
+              <h2 className="p-4 font-bold">Folders</h2>
+              <ul className="space-y-2 p-4 text-xs">
+                <li className="p-2 rounded  hover:text-black ">Folder 1</li>
+                <li className="p-2 rounded   hover:text-black">Folder 2</li>
+              </ul>
+            </aside>
+          )}
+
+          {isSidebarVisible && activeSection === "home" && (
+            <aside
+              className={`fixed left-16 top-0 h-screen ${
+                theme === "dark"
+                  ? "bg-[#121211] text-white"
+                  : "bg-[#f7f5f2] text-black"
+              } shadow-md w-48 z-20`}
+            >
+              <h2 className="p-4 font-bold">Home</h2>
+              <ul className="space-y-2 p-4 text-xs">
+                <li className="flex items-center p-2 rounded  hover:text-black ">
+                  <MdOutlineFolder className="mr-2" />
+                  All files
+                </li>
+                <li className="flex items-center p-2 rounded  hover:text-black">
+                  <MdPhotoLibrary className="mr-2" />
+                  Photos
+                </li>
+                <li className="flex items-center p-2 rounded  hover:text-black">
+                  <MdPeopleAlt className="mr-2" />
+                  Shared
+                </li>
+                <li className="flex items-center p-2 rounded  hover:text-black">
+                  <MdEditNote className="mr-2" />
+                  Signatures
+                </li>
+                <li className="flex items-center p-2 rounded  hover:text-black">
+                  <MdFileDownload className="mr-2" />
+                  File requests
+                </li>
+                <li className="flex items-center p-2 rounded hover:text-black  ">
+                  <MdDelete className="mr-2" />
+                  Deleted files
+                </li>
+              </ul>
+            </aside>
+          )}
+        </div>
+      </div>
+
+      {/* new section */}
 
       <div className="flex-1 ml-16 lg:ml-0 lg:pl-16 p-4 lg:h-screen">
         <div className="flex items-center justify-between mb-4">
