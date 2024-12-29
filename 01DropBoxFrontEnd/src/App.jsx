@@ -11,6 +11,8 @@ import Mobile from "./components/MobileApp/Mobile";
 import Enterprise from "./components/Enterprise/Enterprise";
 import Dashboard from "./pages/Dashboard";
 import DownloadApp from "./components/DownloadApp";
+import ErrorPage from "./pages/ErrorPage";
+import FolderPage from "./components/Dashboard/FolderPage";
 
 const App = () => {
   const location = useLocation();
@@ -56,6 +58,10 @@ const App = () => {
         <Route path="/dashboard/:id" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/install" element={<DownloadApp />} />
+        <Route path="/folders/:folderName" element={<FolderPage />} />
+        <Route path="*" element={<ErrorPage />} />
+
+
       </Routes>
     </div>
   );

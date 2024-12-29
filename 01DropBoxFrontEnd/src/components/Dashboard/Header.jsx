@@ -31,13 +31,29 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const handleFolderClick = (folderName) => {
+    navigate(`/folders/${encodeURIComponent(folderName)}`);
+  };
+  const [folders, setFolders] = useState([]);
+
+  const createFolder = (folderName) => {
+    const updatedFolders = [...folders, folderName];
+    setFolders(updatedFolders);
+    localStorage.setItem("folders", JSON.stringify(updatedFolders));
+  };
+
+  useEffect(() => {
+    const storedFolders = JSON.parse(localStorage.getItem("folders")) || [];
+    setFolders(storedFolders);
+  }, []);
+
   const { user, logoutUser, loginUser } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isThemeDropdownVisible, setIsThemeDropdownVisible] = useState(false);
   const savedTheme = localStorage.getItem("theme");
   const [theme, setTheme] = useState(savedTheme || "light");
-  const navigate = useNavigate();
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   const toggleSidebar = () => {
@@ -117,6 +133,12 @@ const Header = () => {
   const toggleThemeDropdown = () => {
     setIsThemeDropdownVisible((prevState) => !prevState);
   };
+  useEffect(() => {
+    const savedFolders = JSON.parse(localStorage.getItem("folders"));
+    if (savedFolders) {
+      setFolders(savedFolders);
+    }
+  }, []);
 
   return (
     <div
@@ -130,7 +152,6 @@ const Header = () => {
         } ${
           theme === "dark" ? "bg-black" : "bg-[#f7f5f2]"
         } transition-all duration-300 left-1`}
-        
       >
         <div className="mb-8 flex items-center justify-between w-full">
           <a href="/" className="block">
@@ -230,8 +251,23 @@ const Header = () => {
             >
               <h2 className="p-4 font-bold">Folders</h2>
               <ul className="space-y-2 p-4 text-xs">
-                <li className="p-2 rounded  hover:text-black ">Folder 1</li>
-                <li className="p-2 rounded   hover:text-black">Folder 2</li>
+                {folders.length === 0 ? (
+                  <li>No folders available</li>
+                ) : (
+                  folders.map((folder, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center p-2 rounded hover:text-black"
+                      onClick={() => handleFolderClick(folder)}
+                    >
+                      <FaFolder
+                        className="mr-2 text-light-blue-500"
+                        size={14}
+                      />
+                      {folder}
+                    </li>
+                  ))
+                )}
               </ul>
             </aside>
           )}
@@ -515,7 +551,7 @@ const Header = () => {
         </div>
 
         <div className="main-section ml-[-30px]">
-          <Main theme={theme} />
+          <Main theme={theme} createFolder={createFolder} />
         </div>
       </div>
     </div>

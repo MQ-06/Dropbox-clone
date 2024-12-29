@@ -12,24 +12,22 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const Main = ({ theme }) => {
+const Main = ({ theme, createFolder }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [error, setError] = useState("");
+  const handleCreateFolder = () => {
+    if (folderName.trim()) {
+      createFolder(folderName);
+      setFolderName("");
+      handleCloseModal();        
 
+    } else {
+      setError("Please enter a valid folder name.");
+    }
+  };
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setFolderName("");
-    setError("");
-  };
-
-  const handleCreateFolder = () => {
-    if (!folderName.trim()) {
-      setError("Folder name is required!");
-      return;
-    }
-    console.log("Folder created:", folderName);
     setIsModalOpen(false);
     setFolderName("");
     setError("");
@@ -88,7 +86,9 @@ const Main = ({ theme }) => {
         </button>
 
         <button
-          onClick={handleOpenModal}
+          onClick={() => {
+            handleOpenModal(); 
+          }}
           className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
       ${
         theme === "dark"
@@ -132,7 +132,6 @@ const Main = ({ theme }) => {
                 } mb-2`}
               />
 
-              {/* Input Field */}
               <label htmlFor="folder-name" className="block mb-1 mt-5 text-xs">
                 Name
               </label>
