@@ -6,12 +6,14 @@ const AuthRouter = require('./routes/AuthRouter');
 require("dotenv").config();
 const passport = require("passport");
 const passportStrategy = require("./passport");
+const uploadRouter = require('./routes/uploadRoutes'); // Import the new uploadRouter
+
 require('./models/db');
 const session = require('express-session');
 const contactRoutes = require("./routes/contact");
 const userRoutes = require('./routes/userRoute');
 const authenticateToken = require('./middlewares/AuthValidation')
-const uploadRoutes = require('./routes/uploadRoutes');  // Import the routes
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const PORT = process.env.PORT || 5000;
 
@@ -38,6 +40,7 @@ app.use(bodyParser.json());
 
 
 app.use('/auth', AuthRouter);
+
 app.use("/api/contact", contactRoutes);
 app.get("/api/user", authenticateToken, (req, res) => {
   console.log("Decoded User:", req.user);
@@ -51,10 +54,9 @@ app.get("/api/user", authenticateToken, (req, res) => {
 
   res.json(user);
 });
-const router = express.Router();
 
 
-app.use('/api', uploadRoutes);
+app.use('/api', uploadRoutes); // Now routes are accessible under '/api/upload' for uploading
 
 
 

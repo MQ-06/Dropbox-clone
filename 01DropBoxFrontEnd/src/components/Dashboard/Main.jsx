@@ -42,6 +42,66 @@ const Main = ({
   };
 
   const navigate = useNavigate();
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    const folderId = window.location.pathname.split("/")[2]; // Get folder ID from URL
+  
+    if (!file) return;
+  
+    try {
+      const token = localStorage.getItem("authToken");
+  
+      // Step 1: Fetch the upload URL from the backend (which gets it from UploadThing)
+      const response = await fetch("http://localhost:5000/api/upload", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) throw new Error("Failed to get upload URL");
+  
+      const { uploadUrl } = await response.json();
+  
+      // Step 2: Upload the file to UploadThing using the upload URL
+      const formData = new FormData();
+      formData.append("file", file);
+  
+      const uploadResponse = await fetch(uploadUrl, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!uploadResponse.ok) throw new Error("File upload failed");
+  
+      const { fileUrl } = await uploadResponse.json();
+  
+      // Step 3: Send the file metadata to the backend to store in the database
+      const uploadFileResponse = await fetch(
+        `http://localhost:5000/api/folder/${folderId}/upload`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fileUrl,
+            fileName: file.name,
+          }),
+        }
+      );
+  
+      if (!uploadFileResponse.ok) throw new Error("Error uploading file metadata");
+  
+      alert("File uploaded successfully!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Failed to upload file");
+    }
+  };
+  
   return (
     <div
       className={`flex flex-col relative ${
@@ -273,7 +333,16 @@ const Main = ({
           >
             Drop files here to upload
           </p>
-          <button className="mt-4 bg-[#f7f5f2] text-sm text-black border border-gray-300 py-1 px-4 rounded-md font-medium">
+          <input
+            type="file"
+            style={{ display: "none" }}
+            onChange={handleFileUpload}
+            id="file-upload-input"
+          />
+          <button
+            onClick={() => document.getElementById("file-upload-input").click()}
+            className="upload-btn mt-4 bg-[#f7f5f2] text-sm text-black border border-gray-300 py-1 px-4 rounded-md font-medium"
+          >
             Upload
           </button>
         </div>
