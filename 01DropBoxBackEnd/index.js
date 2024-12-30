@@ -9,8 +9,9 @@ const passportStrategy = require("./passport");
 require('./models/db');
 const session = require('express-session');
 const contactRoutes = require("./routes/contact");
-const userRoutes = require('./routes/userRoute'); 
-const authenticateToken=require('./middlewares/AuthValidation')
+const userRoutes = require('./routes/userRoute');
+const authenticateToken = require('./middlewares/AuthValidation')
+const uploadRoutes = require('./routes/uploadRoutes');  // Import the routes
 
 const PORT = process.env.PORT || 5000;
 
@@ -50,6 +51,11 @@ app.get("/api/user", authenticateToken, (req, res) => {
 
   res.json(user);
 });
+const router = express.Router();
+
+
+app.use('/api', uploadRoutes);
+
 
 
 app.listen(PORT, () => {

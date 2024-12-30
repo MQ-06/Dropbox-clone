@@ -12,7 +12,16 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const Main = ({ theme, createFolder }) => {
+const Main = ({
+  theme,
+  createFolder,
+  showUpload = true,
+  showCreate = true,
+  showFolder = true,
+  showApp = true,
+  showCopy = true,
+  showShare = true,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [error, setError] = useState("");
@@ -20,8 +29,7 @@ const Main = ({ theme, createFolder }) => {
     if (folderName.trim()) {
       createFolder(folderName);
       setFolderName("");
-      handleCloseModal();        
-
+      handleCloseModal();
     } else {
       setError("Please enter a valid folder name.");
     }
@@ -41,208 +49,161 @@ const Main = ({ theme, createFolder }) => {
       }`}
     >
       <div className={`flex items-center space-x-4`}>
-        <button
-          className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
-      ${
-        theme === "dark"
-          ? "bg-white text-black hover:bg-neutral-300 border border-zinc-700"
-          : "bg-black text-white border border-gray-300"
-      } 
-      py-2 px-4 rounded-xl font-medium hover:bg-neutral-800`}
-        >
-          <FaUpload
-            className={`text-lg transition-transform transform duration-300 ease-in-out 
-        ${theme === "dark" ? "text-black" : "text-white"} hover:rotate-180`}
-          />
-          <span
-            className={`text-xs mt-3 ${
-              theme === "dark" ? "text-black border-zinc-700" : "text-white"
-            }`}
+        {showUpload && (
+          <button
+            className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
+          ${
+            theme === "dark"
+              ? "bg-white text-black hover:bg-neutral-300 border border-zinc-700"
+              : "bg-black text-white border border-gray-300"
+          } 
+          py-2 px-4 rounded-xl font-medium hover:bg-neutral-800`}
           >
-            Upload or drop
-          </span>
-        </button>
-
-        <button
-          className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
-      ${
-        theme === "dark"
-          ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300"
-      } 
-      py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
-        >
-          <FaPlus
-            className={`text-lg transition-transform transform duration-300 ease-in-out 
-        ${theme === "dark" ? "text-white" : "text-gray-700"} hover:rotate-180`}
-          />
-          <span
-            className={`text-xs mt-3 ${
-              theme === "dark" ? "text-white" : "text-gray-700"
-            }`}
-          >
-            Create
-          </span>
-        </button>
-
-        <button
-          onClick={() => {
-            handleOpenModal(); 
-          }}
-          className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
-      ${
-        theme === "dark"
-          ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300"
-      } 
-      py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
-        >
-          <FaFolderPlus
-            className={`text-lg transition-transform transform duration-300 ease-in-out 
-        ${theme === "dark" ? "text-white" : "text-gray-700"} hover:rotate-180`}
-          />
-          <span
-            className={`text-xs mt-3 ${
-              theme === "dark" ? "text-white" : "text-gray-700"
-            }`}
-          >
-            Create folder
-          </span>
-        </button>
-
-        {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div
-              className={`w-[28rem] p-6 rounded-lg shadow-lg h-[15rem] ${
-                theme === "dark"
-                  ? "bg-[#232322] text-white"
-                  : "bg-white text-gray-700"
+            <FaUpload
+              className={`text-lg transition-transform transform duration-300 ease-in-out 
+            ${theme === "dark" ? "text-black" : "text-white"} hover:rotate-180`}
+            />
+            <span
+              className={`text-xs mt-3 ${
+                theme === "dark" ? "text-black border-zinc-700" : "text-white"
               }`}
             >
-              <div className="flex items-center mb-2">
-                <div className="flex items-center justify-center p-3">
-                  <FaFolderPlus className="text-blue-500 text-lg" />
-                </div>
-                <h2 className="text-med font-semibold ml-2">Create Folder</h2>
-              </div>
-
-              <hr
-                className={`border-t-1 ${
-                  theme === "dark" ? "border-gray-600" : "border-gray-300"
-                } mb-2`}
-              />
-
-              <label htmlFor="folder-name" className="block mb-1 mt-5 text-xs">
-                Name
-              </label>
-              <input
-                id="folder-name"
-                type="text"
-                value={folderName}
-                onChange={(e) => setFolderName(e.target.value)}
-                className={`w-full p-2 border rounded-md mb-2  text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  theme === "dark"
-                    ? "bg-[#1f1f1e] text-white border-gray-600"
-                    : "bg-white text-black"
-                }`}
-                placeholder="Folder name"
-              />
-              {error && <p className="text-red-500 text-xs">{error}</p>}
-
-              <div className="flex justify-end space-x-4 mt-5">
-                <button
-                  onClick={handleCloseModal}
-                  className={`py-2 px-3 rounded-md text-xs ${
-                    theme === "dark"
-                      ? "bg-gray-600 text-white"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleCreateFolder}
-                  className={`py-2 px-3 rounded-md text-xs ${
-                    theme === "dark"
-                      ? "bg-white text-black"
-                      : "bg-black text-white"
-                  }`}
-                >
-                  Create
-                </button>
-              </div>
-            </div>
-          </div>
+              Upload or drop
+            </span>
+          </button>
         )}
 
-        <button
-          onClick={() => navigate("/install")}
-          className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
-        ${
-          theme === "dark"
-            ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-            : "bg-white text-gray-700 border border-gray-300"
-        } 
-        py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
-        >
-          <FaAppStore
-            className={`text-lg transition-transform transform duration-300 ease-in-out 
+        {showCreate && (
+          <button
+            className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
           ${
-            theme === "dark" ? "text-white" : "text-gray-700"
-          } hover:rotate-180`}
-          />
-          <span
-            className={`text-xs mt-3 ${
-              theme === "dark" ? "text-white" : "text-gray-700"
-            }`}
+            theme === "dark"
+              ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
+              : "bg-white text-gray-700 border border-gray-300"
+          } 
+          py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
           >
-            Get the app
-          </span>
-        </button>
+            <FaPlus
+              className={`text-lg transition-transform transform duration-300 ease-in-out 
+            ${
+              theme === "dark" ? "text-white" : "text-gray-700"
+            } hover:rotate-180`}
+            />
+            <span
+              className={`text-xs mt-3 ${
+                theme === "dark" ? "text-white" : "text-gray-700"
+              }`}
+            >
+              Create
+            </span>
+          </button>
+        )}
 
-        <button
-          className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
-      ${
-        theme === "dark"
-          ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300"
-      } 
-      py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
-        >
-          <FaCopy
-            className={`text-lg transition-transform transform duration-300 ease-in-out 
-        ${theme === "dark" ? "text-white" : "text-gray-700"} hover:rotate-180`}
-          />
-          <span
-            className={`text-xs mt-3 ${
-              theme === "dark" ? "text-white" : "text-gray-700"
-            }`}
+        {showFolder && (
+          <button
+            onClick={handleOpenModal}
+            className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
+          ${
+            theme === "dark"
+              ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
+              : "bg-white text-gray-700 border border-gray-300"
+          } 
+          py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
           >
-            Transfer a copy
-          </span>
-        </button>
+            <FaFolderPlus
+              className={`text-lg transition-transform transform duration-300 ease-in-out 
+            ${
+              theme === "dark" ? "text-white" : "text-gray-700"
+            } hover:rotate-180`}
+            />
+            <span
+              className={`text-xs mt-3 ${
+                theme === "dark" ? "text-white" : "text-gray-700"
+              }`}
+            >
+              Create folder
+            </span>
+          </button>
+        )}
 
-        <button
-          className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
-      ${
-        theme === "dark"
-          ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
-          : "bg-white text-gray-700 border border-gray-300"
-      } 
-      py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
-        >
-          <FaShareAlt
-            className={`text-lg transition -transform transform duration-300 ease-in-out 
-        ${theme === "dark" ? "text-white" : "text-gray-700"} hover:rotate-180`}
-          />
-          <span
-            className={`text-xs mt-3 ${
-              theme === "dark" ? "text-white" : "text-gray-700"
-            }`}
+        {showApp && (
+          <button
+            onClick={() => navigate("/install")}
+            className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
+          ${
+            theme === "dark"
+              ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
+              : "bg-white text-gray-700 border border-gray-300"
+          } 
+          py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
           >
-            Share
-          </span>
-        </button>
+            <FaAppStore
+              className={`text-lg transition-transform transform duration-300 ease-in-out 
+            ${
+              theme === "dark" ? "text-white" : "text-gray-700"
+            } hover:rotate-180`}
+            />
+            <span
+              className={`text-xs mt-3 ${
+                theme === "dark" ? "text-white" : "text-gray-700"
+              }`}
+            >
+              Get the app
+            </span>
+          </button>
+        )}
+
+        {showCopy && (
+          <button
+            className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
+          ${
+            theme === "dark"
+              ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
+              : "bg-white text-gray-700 border border-gray-300"
+          } 
+          py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
+          >
+            <FaCopy
+              className={`text-lg transition-transform transform duration-300 ease-in-out 
+            ${
+              theme === "dark" ? "text-white" : "text-gray-700"
+            } hover:rotate-180`}
+            />
+            <span
+              className={`text-xs mt-3 ${
+                theme === "dark" ? "text-white" : "text-gray-700"
+              }`}
+            >
+              Transfer a copy
+            </span>
+          </button>
+        )}
+
+        {showShare && (
+          <button
+            className={`flex flex-col items-start justify-start w-32 h-[4.3rem] 
+          ${
+            theme === "dark"
+              ? "bg-[#1a1a19] text-white hover:bg-zinc-800 border border-zinc-700"
+              : "bg-white text-gray-700 border border-gray-300"
+          } 
+          py-2 px-4 rounded-xl font-medium hover:bg-[#f7f5f2] transition-all`}
+          >
+            <FaShareAlt
+              className={`text-lg transition -transform transform duration-300 ease-in-out 
+            ${
+              theme === "dark" ? "text-white" : "text-gray-700"
+            } hover:rotate-180`}
+            />
+            <span
+              className={`text-xs mt-3 ${
+                theme === "dark" ? "text-white" : "text-gray-700"
+              }`}
+            >
+              Share
+            </span>
+          </button>
+        )}
       </div>
 
       <div className="flex-1 p-2">
@@ -261,6 +222,7 @@ const Main = ({ theme, createFolder }) => {
             <i className="fas fa-cog"></i>
           </button>
         </div>
+
         <div className="flex space-x-3 mb-8">
           <button
             className={`flex items-left px-4 py-2 rounded-full ${
