@@ -1,31 +1,25 @@
-const User = require('../models/users'); // Your User Schema
+const User = require('../models/users'); // Import the user model
 
-// Function to handle storing file metadata
-const uploadFileMetadata = async (req, res) => {
+// Controller function to get user data including folders
+const getUserWithFolders = async (req, res) => {
   try {
-    const { folderId } = req.params;
-    const { fileUrl, fileName } = req.body;
+    const userId = req.params.id; // Get the user ID from the URL params
 
-    // Find the user from token
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    // Find the user by ID and populate the folders and files
+    const user = await User.findById(userId).select('firstName lastName email folders');
 
-    // Find the folder by ID
-    const folder = user.folders.id(folderId);
-    if (!folder) return res.status(404).json({ message: 'Folder not found' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-    // Add the file metadata to the folder
-    folder.files.push({
-      fileName,
-      fileUrl,
-      uploadedAt: new Date(),
-    });
-
-    await user.save(); // Save the updated user document
-    res.status(200).json({ message: 'File uploaded and metadata stored successfully' });
+    // Send the user data and folders
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: 'Error uploading file metadata', error: error.message });
+    console.error('Error fetching user and folders:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-module.exports = { uploadFileMetadata };
+module.exports = {
+  getUserWithFolders,
+};

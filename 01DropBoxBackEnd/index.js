@@ -6,14 +6,14 @@ const AuthRouter = require('./routes/AuthRouter');
 require("dotenv").config();
 const passport = require("passport");
 const passportStrategy = require("./passport");
-const uploadRouter = require('./routes/uploadRoutes'); // Import the new uploadRouter
-
 require('./models/db');
 const session = require('express-session');
 const contactRoutes = require("./routes/contact");
-const userRoutes = require('./routes/userRoute');
+const User = require('./models/users'); // Import the User model
 const authenticateToken = require('./middlewares/AuthValidation')
-const uploadRoutes = require('./routes/uploadRoutes');
+const userRoutes = require('./routes/userRoute');
+const folderRoutes = require("./routes/file");
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -33,32 +33,18 @@ app.use(
     credentials: true,
   })
 );
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.json());
 
 
+
+
+app.use('/api/user', userRoutes);
+app.use("/api", folderRoutes);
 app.use('/auth', AuthRouter);
-
 app.use("/api/contact", contactRoutes);
-app.get("/api/user", authenticateToken, (req, res) => {
-  console.log("Decoded User:", req.user);
-
-  const user = {
-    id: req.user.id,
-    firstName: req.user.firstName || "",
-    lastName: req.user.lastName || "",
-    profilePicture: req.user.profilePicture || null,
-  };
-
-  res.json(user);
-});
-
-
-app.use('/api', uploadRoutes); // Now routes are accessible under '/api/upload' for uploading
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

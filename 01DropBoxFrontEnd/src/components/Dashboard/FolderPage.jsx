@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
 import React, { useState, useContext, useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   FaSearch,
   FaUserPlus,
@@ -8,15 +8,10 @@ import {
   FaTh,
   FaHome,
   FaFolder,
-  FaChevronUp,
-  FaChevronDown,
-  FaUser,
-  FaArrowLeft,
   FaChevronLeft,
   FaChevronRight,
-  FaArrowRight,
+  FaUser,
 } from "react-icons/fa";
-
 import {
   MdOutlineFolder,
   MdPhotoLibrary,
@@ -25,30 +20,23 @@ import {
   MdFileDownload,
   MdDelete,
 } from "react-icons/md";
-
 import { UserContext } from "../../context/UserContext";
-import Main from "./main";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import Main from "./Main";
 
 const FolderPage = () => {
-  const navigate = useNavigate();
+  const toggleThemeDropdown = () => {
+    setIsThemeDropdownVisible((prevState) => !prevState);
+  };
   const handleFolderClick = (folderName) => {
     navigate(`/folders/${encodeURIComponent(folderName)}`);
   };
-  const [folders, setFolders] = useState([]);
-
-  const createFolder = (folderName) => {
-    const updatedFolders = [...folders, folderName];
-    setFolders(updatedFolders);
-    localStorage.setItem("folders", JSON.stringify(updatedFolders));
+  const toggleDropdown = () => {
+    setIsDropdownVisible((prevState) => !prevState);
   };
+  const navigate = useNavigate();
+  const { folderName } = useParams();
 
-  useEffect(() => {
-    const storedFolders = JSON.parse(localStorage.getItem("folders")) || [];
-    setFolders(storedFolders);
-  }, []);
-
+  const [folders, setFolders] = useState([]);
   const { user, logoutUser, loginUser } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -61,6 +49,17 @@ const FolderPage = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  const createFolder = (folderName) => {
+    const updatedFolders = [...folders, folderName];
+    setFolders(updatedFolders);
+    localStorage.setItem("folders", JSON.stringify(updatedFolders));
+  };
+
+  useEffect(() => {
+    const storedFolders = JSON.parse(localStorage.getItem("folders")) || [];
+    setFolders(storedFolders);
+  }, []);
+
   const changeTheme = (selectedTheme) => {
     setTheme(selectedTheme);
     if (user?.id) {
@@ -68,143 +67,17 @@ const FolderPage = () => {
     }
     setIsThemeDropdownVisible(false);
   };
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-    const id = urlParams.get("id");
-
-    if (token) {
-      localStorage.setItem("authToken", token);
-      fetchUserData(token);
-    } else if (id) {
-      navigate(`/dashboard/${id}`);
+  const handleIconClick = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.id) {
+      navigate(`/dashboard/${user.id}`);
     } else {
-      console.error("No token or id found in the URL");
-    }
-  }, [navigate]);
-
-  const fetchUserData = async (token) => {
-    try {
-      const response = await fetch("http://localhost:5000/api/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-
-      const data = await response.json();
-      loginUser(data);
-
-      const savedThemeForUser = localStorage.getItem(`theme_${data.id}`);
-      if (savedThemeForUser) {
-        setTheme(savedThemeForUser);
-      } else {
-        setTheme("light");
-      }
-    } catch (error) {
-      console.error("Error fetching user data", error);
+      console.error("User ID not found in localStorage");
     }
   };
-
-  useEffect(() => {
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, [savedTheme]);
-
-  useEffect(() => {
-    if (user) {
-      const savedThemeForUser = localStorage.getItem(`theme_${user.id}`);
-      if (savedThemeForUser) {
-        setTheme(savedThemeForUser);
-      } else {
-        setTheme("light");
-      }
-    }
-  }, [user]);
-
-  const toggleDropdown = () => {
-    setIsDropdownVisible((prevState) => !prevState);
-  };
-
-  const toggleThemeDropdown = () => {
-    setIsThemeDropdownVisible((prevState) => !prevState);
-  };
-  useEffect(() => {
-    const savedFolders = JSON.parse(localStorage.getItem("folders"));
-    if (savedFolders) {
-      setFolders(savedFolders);
-    }
-  }, []);
-  
-  const { folderName } = useParams();
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    const folderId = window.location.pathname.split("/")[2]; // Get folder ID from URL
-
-    if (!file) return;
-
-    try {
-      const token = localStorage.getItem("authToken");
-
-      // Step 1: Fetch the upload URL from the backend
-      const response = await fetch("http://localhost:5000/api/upload", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) throw new Error("Failed to get upload URL");
-
-      const { uploadUrl } = await response.json();
-
-      // Step 2: Upload the file to the upload URL
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const uploadResponse = await fetch(uploadUrl, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!uploadResponse.ok) throw new Error("File upload failed");
-
-      const { fileUrl } = await uploadResponse.json();
-
-      // Step 3: Send the file metadata along with the folder ID to the backend
-      const uploadFileResponse = await fetch(
-        `http://localhost:5000/api/folder/${folderId}/upload`, // Pass folderId in URL
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fileUrl,
-            fileName: file.name,
-          }),
-        }
-      );
-
-      if (!uploadFileResponse.ok)
-        throw new Error("Error uploading file metadata");
-
-      alert("File uploaded successfully!");
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("Failed to upload file");
-    }
-  };
-
   return (
     <div
-      className={`flex flex-col lg:flex-row  ${
+      className={`flex flex-col lg:flex-row ${
         theme === "dark" ? "bg-[#1a1a19] text-white" : "bg-white text-black"
       }`}
     >
@@ -216,7 +89,7 @@ const FolderPage = () => {
         } transition-all duration-300 left-1`}
       >
         <div className="mb-8 flex items-center justify-between w-full">
-          <a href="/" className="block">
+          <a href="#" onClick={handleIconClick} className="block">
             <svg
               className="w-8 h-8"
               viewBox="0 0 30 25"
@@ -253,12 +126,12 @@ const FolderPage = () => {
             <div
               className={`p-1.5 rounded-full ${
                 theme === "dark" ? "bg-white" : "bg-gray-200"
-              } flex items-center justify-center  `}
+              } flex items-center justify-center`}
             >
               <FaHome className="text-black w-4 h-4" />
             </div>
             <span
-              className={`text-xs mt-2  ${
+              className={`text-xs mt-2 ${
                 theme === "dark"
                   ? "text-white"
                   : "text-gray-700 group-hover:text-gray-900"
@@ -278,7 +151,7 @@ const FolderPage = () => {
               <FaFolder className="text-black w-4 h-4" />
             </div>
             <span
-              className={`text-xs mt-2  ${
+              className={`text-xs mt-2 ${
                 theme === "dark"
                   ? "text-white"
                   : "text-gray-700 group-hover:text-gray-900"
@@ -296,7 +169,7 @@ const FolderPage = () => {
         </button>
       </aside>
 
-      <div className="relative ">
+      <div className="relative">
         <div
           className={`flex-grow-0 lg:pl-16 p-4 lg:h-screen transition-all duration-300 ${
             isSidebarVisible ? "ml-48" : "ml-0"
@@ -305,7 +178,7 @@ const FolderPage = () => {
         >
           {isSidebarVisible && activeSection === "folders" && (
             <aside
-              className={`fixed left-16 top-0 h-screen  ${
+              className={`fixed left-16 top-0 h-screen ${
                 theme === "dark"
                   ? "bg-[#121211] text-white"
                   : "bg-[#f7f5f2] text-black"
@@ -318,7 +191,7 @@ const FolderPage = () => {
                 ) : (
                   folders.map((folder, index) => (
                     <li
-                      key={index}
+                      key={folder._id} // Use a unique identifier instead of index if available
                       className="flex items-center p-2 rounded hover:text-black"
                       onClick={() => handleFolderClick(folder)}
                     >
@@ -326,7 +199,7 @@ const FolderPage = () => {
                         className="mr-2 text-light-blue-500"
                         size={14}
                       />
-                      {folder}
+                      {folder.folderName}
                     </li>
                   ))
                 )}
@@ -344,37 +217,29 @@ const FolderPage = () => {
             >
               <h2 className="p-4 font-bold">Home</h2>
               <ul className="space-y-2 p-4 text-xs">
-                <li className="flex items-center p-2 rounded  hover:text-black ">
-                  <MdOutlineFolder className="mr-2" />
-                  All files
+                <li className="flex items-center p-2 rounded hover:text-black">
+                  <MdOutlineFolder className="mr-2" /> All files
                 </li>
-                <li className="flex items-center p-2 rounded  hover:text-black">
-                  <MdPhotoLibrary className="mr-2" />
-                  Photos
+                <li className="flex items-center p-2 rounded hover:text-black">
+                  <MdPhotoLibrary className="mr-2" /> Photos
                 </li>
-                <li className="flex items-center p-2 rounded  hover:text-black">
-                  <MdPeopleAlt className="mr-2" />
-                  Shared
+                <li className="flex items-center p-2 rounded hover:text-black">
+                  <MdPeopleAlt className="mr-2" /> Shared
                 </li>
-                <li className="flex items-center p-2 rounded  hover:text-black">
-                  <MdEditNote className="mr-2" />
-                  Signatures
+                <li className="flex items-center p-2 rounded hover:text-black">
+                  <MdEditNote className="mr-2" /> Signatures
                 </li>
-                <li className="flex items-center p-2 rounded  hover:text-black">
-                  <MdFileDownload className="mr-2" />
-                  File requests
+                <li className="flex items-center p-2 rounded hover:text-black">
+                  <MdFileDownload className="mr-2" /> File requests
                 </li>
-                <li className="flex items-center p-2 rounded hover:text-black  ">
-                  <MdDelete className="mr-2" />
-                  Deleted files
+                <li className="flex items-center p-2 rounded hover:text-black">
+                  <MdDelete className="mr-2" /> Deleted files
                 </li>
               </ul>
             </aside>
           )}
         </div>
       </div>
-
-      {/* new section */}
 
       <div className="flex-1 ml-16 lg:ml-0 lg:pl-16 p-4 lg:h-screen">
         <div className="flex items-center justify-between mb-4">
@@ -405,9 +270,8 @@ const FolderPage = () => {
               }`}
             >
               <FaUser
-                Plus
                 className={`mr-2 ${
-                  theme === " dark" ? "text-white" : "text-black-600"
+                  theme === "dark" ? "text-white" : "text-black-600"
                 }`}
               />
               Invite members
@@ -416,8 +280,8 @@ const FolderPage = () => {
             <button
               className={`p-2 ${
                 theme === "dark"
-                  ? " text-white hover:bg-neutral-700 rounded-lg"
-                  : " text-gray-700 hover:bg-gray-300"
+                  ? "text-white hover:bg-neutral-700 rounded-lg"
+                  : "text-gray-700 hover:bg-gray-300"
               }`}
             >
               <FaTh />
@@ -425,8 +289,8 @@ const FolderPage = () => {
             <button
               className={`p-2 ${
                 theme === "dark"
-                  ? " text-white hover:bg-neutral-700 rounded-lg"
-                  : " text-gray-700 hover:bg-gray-300"
+                  ? "text-white hover:bg-neutral-700 rounded-lg"
+                  : "text-gray-700 hover:bg-gray-300"
               }`}
             >
               <FaQuestionCircle />
@@ -435,8 +299,8 @@ const FolderPage = () => {
               <button
                 className={`p-2 ${
                   theme === "dark"
-                    ? " text-white hover:bg-neutral-700 rounded-lg"
-                    : " text-gray-700 hover:bg-gray-300"
+                    ? "text-white hover:bg-neutral-700 rounded-lg"
+                    : "text-gray-700 hover:bg-gray-300"
                 }`}
               >
                 <FaBell />
@@ -444,7 +308,7 @@ const FolderPage = () => {
               <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
             </div>
 
-            <div className="relative ">
+            <div className="relative">
               <button
                 onClick={toggleDropdown}
                 className="flex items-center justify-center w-8 h-8 text-xs font-xs text-black bg-blue-400 rounded-full z-10"
@@ -462,7 +326,7 @@ const FolderPage = () => {
               </button>
               {isDropdownVisible && (
                 <div
-                  className={`absolute right-0 mt-2 w-54 rounded-md shadow-md z-50  ${
+                  className={`absolute right-0 mt-2 w-54 rounded-md shadow-md z-50 ${
                     theme === "dark"
                       ? "bg-[#333333] text-white"
                       : "bg-white text-black"
@@ -487,7 +351,7 @@ const FolderPage = () => {
                           theme === "dark" ? "text-gray-400" : "text-gray-500"
                         }`}
                       >
-                        {user?.email || "email@example.com"}
+                        {user?.email || "email@example .com"}
                       </div>
                     </div>
                   </div>
@@ -534,7 +398,7 @@ const FolderPage = () => {
                       <a
                         href="#"
                         className={`block ${
-                          theme === "dark" ? "text-black " : "text-black"
+                          theme === "dark" ? "text-black" : "text-black"
                         }`}
                       >
                         Automations
@@ -544,7 +408,7 @@ const FolderPage = () => {
                       <a
                         href="#"
                         className={`block ${
-                          theme === "dark" ? "text-black " : "text-black"
+                          theme === "dark" ? "text-black" : "text-black"
                         }`}
                       >
                         Install desktop app
@@ -553,7 +417,7 @@ const FolderPage = () => {
                     <li>
                       <button
                         onClick={toggleThemeDropdown}
-                        className={`block  ${
+                        className={`block ${
                           theme === "dark" ? "text-black" : "text-black"
                         }`}
                       >
@@ -562,7 +426,7 @@ const FolderPage = () => {
 
                       {isThemeDropdownVisible && (
                         <div
-                          className={`absolute left-0 mt-1 border  rounded-md shadow-md w-36 z-50 ${
+                          className={`absolute left-0 mt-1 border rounded-md shadow-md w-36 z-50 ${
                             theme === "dark" ? "bg-[#444444]" : "bg-white"
                           }`}
                         >
@@ -578,7 +442,7 @@ const FolderPage = () => {
                           </button>
                           <button
                             onClick={() => changeTheme("dark")}
-                            className={`block w-full px-4 py-2 text-left  ${
+                            className={`block w-full px-4 py-2 text-left ${
                               theme === "dark"
                                 ? "text-white hover:bg-[#333333]"
                                 : "text-black hover:bg-gray-100"
@@ -622,9 +486,12 @@ const FolderPage = () => {
             showApp={true}
             showCopy={false}
             showShare={true}
+            showFolders={false}
           />
         </div>
       </div>
+
+      
     </div>
   );
 };

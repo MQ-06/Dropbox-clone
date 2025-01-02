@@ -58,10 +58,8 @@ const App = () => {
         <Route path="/dashboard/:id" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/install" element={<DownloadApp />} />
-        <Route
-          path="/folders/:folderName"
-          element={<FolderPage />}
-        />
+        <Route path="/folders/:folderName" element={<FolderPage />} />
+
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>

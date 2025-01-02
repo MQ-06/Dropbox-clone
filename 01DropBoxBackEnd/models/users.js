@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs');
 
 const fileSchema = new mongoose.Schema({
   fileName: { type: String, required: true }, // Name of the file
-  fileUrl: { type: String, required: true }, // URL returned by UploadThing
   uploadedAt: { type: Date, default: Date.now }, // Upload timestamp
 });
 

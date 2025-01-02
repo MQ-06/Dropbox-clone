@@ -1,16 +1,17 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-// Middleware to validate token
 const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+  console.log("Authorization Header on Server:", req.headers.authorization);
 
+  const token = req.headers["authorization"]?.split(" ")[1]; 
   if (!token) {
-    return res.status(401).json({ message: 'Access Denied, Token Missing' });
+    return res.status(403).json({ message: "Authorization token missing." });
   }
 
+  // JWT verification logic (as per your previous code)
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return res.status(403).json({ message: 'Token is invalid or expired' });
+      return res.status(403).json({ message: "Forbidden" });
     }
     req.user = user;
     next();
@@ -18,4 +19,5 @@ const authenticateToken = (req, res, next) => {
 };
 
 
-module.exports = authenticateToken;
+module.exports = { authenticateToken };
+

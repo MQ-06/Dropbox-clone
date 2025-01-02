@@ -26,16 +26,17 @@ import {
 } from "react-icons/md";
 
 import { UserContext } from "../../context/UserContext";
-import Main from "./main";
+import Main from "./Main";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  
   const navigate = useNavigate();
+
   const handleFolderClick = (folderName) => {
     navigate(`/folders/${encodeURIComponent(folderName)}`);
   };
+
   const [folders, setFolders] = useState([]);
 
   const createFolder = (folderName) => {
@@ -43,11 +44,6 @@ const Header = () => {
     setFolders(updatedFolders);
     localStorage.setItem("folders", JSON.stringify(updatedFolders));
   };
-
-  useEffect(() => {
-    const storedFolders = JSON.parse(localStorage.getItem("folders")) || [];
-    setFolders(storedFolders);
-  }, []);
 
   const { user, logoutUser, loginUser } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("home");
@@ -61,6 +57,13 @@ const Header = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  useEffect(() => {
+    const storedFolders = JSON.parse(localStorage.getItem("folders"));
+    if (storedFolders) {
+      setFolders(storedFolders);
+    }
+  }, []);
+
   const changeTheme = (selectedTheme) => {
     setTheme(selectedTheme);
     if (user?.id) {
@@ -69,26 +72,56 @@ const Header = () => {
     setIsThemeDropdownVisible(false);
   };
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-    const id = urlParams.get("id");
-
-    if (token) {
-      localStorage.setItem("authToken", token);
-      fetchUserData(token);
-    } else if (id) {
-      navigate(`/dashboard/${id}`);
+  const handleIconClick = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.id) {
+      navigate(`/dashboard/${user.id}`);
     } else {
-      console.error("No token or id found in the URL");
+      console.error("User ID not found in localStorage");
+    }
+  };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    // Check if the user is in localStorage
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const id = user._id;
+
+      if (id) {
+        // navigate(`/dashboard/${id}`);
+        fetchUserData(id);
+      }
     }
   }, [navigate]);
+  useEffect(() => {
+    const storedFolders = localStorage.getItem("folders");
+    if (storedFolders) {
+      setFolders(JSON.parse(storedFolders));
+    } else {
+      if (user) {
+        fetchUserData(user.id);
+      }
+    }
+  }, [user]);
 
-  const fetchUserData = async (token) => {
+  useEffect(() => {
+    localStorage.setItem("folders", JSON.stringify(folders));
+  }, [folders]);
+  const fetchUserData = async (id) => {
     try {
-      const response = await fetch("http://localhost:5000/api/user", {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        console.error("Token is missing");
+        return;
+      }
+
+      const response = await fetch(`http://localhost:5000/api/user/${id}`, {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
 
@@ -97,8 +130,29 @@ const Header = () => {
       }
 
       const data = await response.json();
-      loginUser(data);
 
+      const foldersResponse = await fetch(
+        `http://localhost:5000/api/user/${id}/folders`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!foldersResponse.ok) {
+        throw new Error("Failed to fetch user folders");
+      }
+
+      const foldersData = await foldersResponse.json();
+      setFolders(foldersData);
+
+      // Store folders in localStorage for later
+      localStorage.setItem("folders", JSON.stringify(foldersData));
+
+      // Update theme based on user preference
       const savedThemeForUser = localStorage.getItem(`theme_${data.id}`);
       if (savedThemeForUser) {
         setTheme(savedThemeForUser);
@@ -155,7 +209,7 @@ const Header = () => {
         } transition-all duration-300 left-1`}
       >
         <div className="mb-8 flex items-center justify-between w-full">
-          <a href="/" className="block">
+          <a href="#" onClick={handleIconClick} className="block">
             <svg
               className="w-8 h-8"
               viewBox="0 0 30 25"
@@ -252,6 +306,7 @@ const Header = () => {
             >
               <h2 className="p-4 font-bold">Folders</h2>
               <ul className="space-y-2 p-4 text-xs">
+                {" "}
                 {folders.length === 0 ? (
                   <li>No folders available</li>
                 ) : (
@@ -259,16 +314,19 @@ const Header = () => {
                     <li
                       key={index}
                       className="flex items-center p-2 rounded hover:text-black"
-                      onClick={() => handleFolderClick(folder)}
+                      onClick={() => handleFolderClick(folder.folderName)}
                     >
+                      {" "}
                       <FaFolder
                         className="mr-2 text-light-blue-500"
                         size={14}
                       />
-                      {folder}
+                                            {folder.folderName}                
+                         {" "}
                     </li>
                   ))
                 )}
+                             {" "}
               </ul>
             </aside>
           )}
@@ -343,8 +401,7 @@ const Header = () => {
                   : "text-gray-700 bg-gray-200 hover:bg-gray-300"
               }`}
             >
-              <FaUser
-                Plus
+              <FaUserPlus
                 className={`mr-2 ${
                   theme === " dark" ? "text-white" : "text-black-600"
                 }`}
